@@ -18,7 +18,10 @@ public class Job_description implements Serializable{
         @JsonProperty("description")
 	private String description;
         
-        @JsonProperty("vacancies")
+        @JsonProperty("isActive")
+    private boolean isactive;
+
+		@JsonProperty("vacancies")
 	private int vacancies;
         
         @JsonProperty("filled")
@@ -53,6 +56,12 @@ public class Job_description implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+    public boolean isactive() {
+		return isactive;
+	}
+	public void setActive(boolean isactive) {
+		this.isactive = isactive;
 	}
 	public int getVacancies() {
 		return vacancies;

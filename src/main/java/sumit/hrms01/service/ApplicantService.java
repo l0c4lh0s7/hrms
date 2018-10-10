@@ -17,8 +17,7 @@ public class ApplicantService implements IApplicantService {
 	
 	@Override
 	public Collection<Applicant> list(){
-		Collection<Applicant> applicants = (Collection<Applicant>) this.applicantRepository.findAll();
-		return applicants;
+		return (Collection<Applicant>) this.applicantRepository.findAll();
 	}
 	
 	@Override
@@ -43,5 +42,15 @@ public class ApplicantService implements IApplicantService {
 	@Override
 	public Applicant findById(Long id) {
 		return this.applicantRepository.findById(id).get();
+	}
+	
+	@Override
+	public Collection<Applicant> getAppliedCandidate(Collection<Long> candidateIds){
+		return (Collection<Applicant>) this.applicantRepository.findAllById(candidateIds);
+	}
+	
+	@Override
+	public Collection<Applicant> getAllWithStatusId(Long statusId){
+		return this.applicantRepository.getAllByStatusId(statusId);
 	}
 }

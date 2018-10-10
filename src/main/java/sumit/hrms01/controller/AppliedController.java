@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sumit.hrms01.model.Applied_to;
-import sumit.hrms01.service.AppliedService;
+import sumit.hrms01.service.IAppliedService;
 
 
 @RestController
@@ -18,7 +18,7 @@ import sumit.hrms01.service.AppliedService;
 public class AppliedController {
 
 	@Autowired
-	AppliedService appliedService;
+	IAppliedService appliedService;
 	
 	@RequestMapping( value="/list", 
 			method= RequestMethod.GET

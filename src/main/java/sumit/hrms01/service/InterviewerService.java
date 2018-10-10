@@ -9,7 +9,7 @@ import sumit.hrms01.repository.InterviewerRepository;
 import java.util.*;
 
 @Service
-public class InterviewerService implements IInterviewerRepository {
+public class InterviewerService implements IInterviewerService {
 
 	
 	@Autowired
