@@ -21,6 +21,8 @@ import sumit.hrms01.service.IStatusService;
 @RequestMapping("/candidate")
 public class CandidateController {
 
+
+	
 	@Autowired
 	IApplicantService applicantService;
 	
