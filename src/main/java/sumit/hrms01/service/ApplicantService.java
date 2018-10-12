@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sumit.hrms01.exceptions.ApplicantNotFoundException;
 import sumit.hrms01.model.Applicant;
 import sumit.hrms01.repository.ApplicantRepository;
 
@@ -42,7 +43,11 @@ public class ApplicantService implements IApplicantService {
 	
 	@Override
 	public Applicant findById(Long id) {
-		return this.applicantRepository.findById(id).get();
+		Optional<Applicant> applicant =  this.applicantRepository.findById(id);
+		if(!applicant.isPresent())
+			throw new ApplicantNotFoundException("id : " + id);
+		else
+			return applicant.get();
 	}
 	
 	@Override

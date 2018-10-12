@@ -59,6 +59,7 @@ public class SecurityConfig implements WebMvcConfigurer{
 			http
 				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
 				.and().authorizeRequests().antMatchers("/applicant/**").permitAll()
+				.and().authorizeRequests().anyRequest().authenticated()
 				.and().httpBasic();
 		}
 	}
