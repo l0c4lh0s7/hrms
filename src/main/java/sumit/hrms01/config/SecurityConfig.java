@@ -1,6 +1,9 @@
 package sumit.hrms01.config;
 
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,23 +17,38 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import sumit.hrms01.model.Applicant;
+import sumit.hrms01.service.IApplicantService;
+import sumit.hrms01.service.IRolesService;
+
 @EnableWebSecurity
 public class SecurityConfig implements WebMvcConfigurer{
 
-	@Value("${client.username}")
-	String user;
-	@Value("${client.password}")
-	String pass;
-	@Value("${client.roles}")
-	String []roles;
-
+//	@Value("${client[0].username}")
+//	String user;
+//	@Value("${client[0].password}")
+//	String pass;
+//	@Value("${client[0].roles}")
+//	String []roles;
+	
+	@Autowired
+	IRolesService rolesService;
+	
+	@Autowired
+	IApplicantService applicantService;
 	
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(users.username(user).password(pass).roles(roles).build());
-		manager.createUser(users.username("newUser").password("password1").roles("ADMIN").build());
+		
+		List<Applicant> applicants = (List<Applicant>) applicantService.list();
+		for( Applicant applicant: applicants) {
+			manager.createUser(users.username(applicant.getName()).password("DEFAULT")
+					.roles(rolesService.getRoleWithApplicantId(applicant.getId())).build());
+		}
+				
+//		manager.createUser(users.username(user).password(pass).roles(roles).build());
 		return manager;
 	}
 	
@@ -39,8 +57,8 @@ public class SecurityConfig implements WebMvcConfigurer{
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
 			http
-				.authorizeRequests().antMatchers("/candidate/**").hasRole("USER")
-				.and().authorizeRequests().antMatchers("/job/**").permitAll()
+				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
+				.and().authorizeRequests().antMatchers("/applicant/**").permitAll()
 				.and().httpBasic();
 		}
 	}

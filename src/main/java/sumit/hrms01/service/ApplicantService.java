@@ -1,5 +1,6 @@
 package sumit.hrms01.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -52,5 +53,14 @@ public class ApplicantService implements IApplicantService {
 	@Override
 	public Collection<Applicant> getAllWithStatusId(Long statusId){
 		return this.applicantRepository.getAllByStatusId(statusId);
+	}
+
+	@Override
+	public Collection<String> getAllUserName() {
+		Collection<String> userNames =new ArrayList<String>(); 
+				for(Applicant applicant: this.list()) {
+					userNames.add(applicant.getName());
+				}
+		return userNames;
 	}
 }

@@ -22,6 +22,8 @@ public interface IApplicantService {
 	public Collection<Applicant> getAppliedCandidate(Collection<Long> candidateIds);
 	
 	public Collection<Applicant> getAllWithStatusId(Long statusId);
+	
+	public Collection<String> getAllUserName();
 
 
 }

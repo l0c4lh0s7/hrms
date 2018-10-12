@@ -13,6 +13,7 @@ public class Applied_to implements Serializable{
 	
 
         @Id
+    	@GeneratedValue(strategy=GenerationType.AUTO)
         @JsonProperty("id")
 	private Long id;
 	

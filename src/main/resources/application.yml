@@ -11,6 +11,10 @@ spring:
           new_generator_mappings: false
         format_sql: true
 client:
-  username: user
-  password: password
-  roles: ADMIN
+  - username: user
+    password: password
+    roles: ADMIN, USER
+  - usernam: user1
+    password: password2
+    roles: USER
+    
