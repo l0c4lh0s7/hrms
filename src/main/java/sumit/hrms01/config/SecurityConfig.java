@@ -4,7 +4,6 @@ package sumit.hrms01.config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -57,7 +56,9 @@ public class SecurityConfig implements WebMvcConfigurer{
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
 			http
-				.authorizeRequests().antMatchers("/job").hasRole("USER")
+				.authorizeRequests().antMatchers("/job/add").hasRole("ADMIN")
+				.and()
+				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
 				.and().authorizeRequests().antMatchers("/applicant/add").permitAll()
 				.and().authorizeRequests().antMatchers("/jobdesc/add").hasRole("ADMIN")
 				.and().csrf().disable()

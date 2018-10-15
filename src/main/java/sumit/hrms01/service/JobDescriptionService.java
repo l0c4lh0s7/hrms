@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sumit.hrms01.exceptions.JobNotFoundException;
 import sumit.hrms01.model.Job_description;
 import sumit.hrms01.repository.JobDescriptionRepository;
 
@@ -41,7 +42,10 @@ public class JobDescriptionService implements IJobDescriptionService {
 	
 	@Override
 	public Job_description findById(Long id) {
+		if(jdRepository.existsById(id))
 		return this.jdRepository.findById(id).get();
+		else
+			throw new JobNotFoundException("JOB id: " + id + " is not associated with any job");
 	}
 
 	@Override
