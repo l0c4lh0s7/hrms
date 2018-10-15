@@ -35,7 +35,7 @@ public class ApplicantController {
 					 method = RequestMethod.POST
 					 )
 	public void insertApplicant(@RequestBody Applicant applicant) {
-		
+		System.out.println(applicant.toString());
 		this.applicantService.insert(applicant);
 		Roles role = new Roles();
 		role.setApplicantId(applicant.getId());

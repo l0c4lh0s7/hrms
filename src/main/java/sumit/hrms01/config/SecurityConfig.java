@@ -47,8 +47,8 @@ public class SecurityConfig implements WebMvcConfigurer{
 			manager.createUser(users.username(applicant.getName()).password("DEFAULT")
 					.roles(rolesService.getRoleWithApplicantId(applicant.getId())).build());
 		}
+			manager.createUser(users.username("ADMIN").password("admin").roles("ADMIN", "USER").build());
 				
-//		manager.createUser(users.username(user).password(pass).roles(roles).build());
 		return manager;
 	}
 	
@@ -57,10 +57,21 @@ public class SecurityConfig implements WebMvcConfigurer{
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
 			http
-				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
-				.and().authorizeRequests().antMatchers("/applicant/**").permitAll()
-				.and().authorizeRequests().anyRequest().authenticated()
-				.and().httpBasic();
+				.authorizeRequests().antMatchers("/job").hasRole("USER")
+				.and().authorizeRequests().antMatchers("/applicant/add").permitAll()
+				.and().authorizeRequests().antMatchers("/jobdesc/add").hasRole("ADMIN")
+				.and().csrf().disable()
+				.httpBasic();
+		}
+	}
+	
+	@Configuration
+	public static class RemainingAuthorizations extends WebSecurityConfigurerAdapter{
+		protected void configure(HttpSecurity http) throws Exception{
+			http
+				.authorizeRequests().anyRequest().authenticated()
+				.and()
+				.formLogin();
 		}
 	}
 

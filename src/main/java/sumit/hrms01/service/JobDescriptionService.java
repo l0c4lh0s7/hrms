@@ -23,6 +23,7 @@ public class JobDescriptionService implements IJobDescriptionService {
 	
 	@Override
 	public void insert(Job_description jd) {
+		System.out.println(jd.toString());
 		this.jdRepository.save(jd);
 	}
 	
