@@ -45,7 +45,7 @@ public class ApplicantService implements IApplicantService {
 	public Applicant findById(Long id) {
 		Optional<Applicant> applicant =  this.applicantRepository.findById(id);
 		if(!applicant.isPresent())
-			throw new ApplicantNotFoundException("id : " + id);
+			throw new ApplicantNotFoundException("id : " + id + " is not associated with any user");
 		else
 			return applicant.get();
 	}
