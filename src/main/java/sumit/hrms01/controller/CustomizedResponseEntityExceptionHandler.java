@@ -20,7 +20,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	// Now this method is mapped to every exception that could happen at runtime
 	@ExceptionHandler(RuntimeException.class)
 	public final ResponseEntity<ExceptionDetail> 
-	handleApplicantNotFoundException(ApplicantNotFoundException ex,
+	handleApplicantNotFoundException(RuntimeException ex,
 													  WebRequest request){
 		ExceptionDetail exceptionDetail = new ExceptionDetail(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(exceptionDetail, HttpStatus.BAD_REQUEST);
