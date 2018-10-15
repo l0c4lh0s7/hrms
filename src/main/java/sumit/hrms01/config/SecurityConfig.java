@@ -55,24 +55,26 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Order(1)
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
-			http
+			http.csrf().disable()
 				.authorizeRequests().antMatchers("/job/add").hasRole("ADMIN")
 				.and()
 				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
 				.and().authorizeRequests().antMatchers("/applicant/add").permitAll()
 				.and().authorizeRequests().antMatchers("/jobdesc/add").hasRole("ADMIN")
+				
+				.and().authorizeRequests().anyRequest().authenticated()
 				.and().csrf().disable()
 				.httpBasic();
 		}
 	}
 	
 	@Configuration
+	@Order(2)
 	public static class RemainingAuthorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception{
 			http
 				.authorizeRequests().anyRequest().authenticated()
-				.and()
-				.formLogin();
+				.and().formLogin();
 		}
 	}
 
