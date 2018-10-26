@@ -28,5 +28,4 @@ public class ApplicationTests {
 		service.list();
 		verify(repository).findAll();
 	}
-
 }

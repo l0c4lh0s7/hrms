@@ -15,5 +15,9 @@ public interface IStatusService {
 	void delete(Status status);
 
 	Status findById(Long id);
+	
+	// Custom methods
+	
+	public Long getStatusId(String status);
 
 }

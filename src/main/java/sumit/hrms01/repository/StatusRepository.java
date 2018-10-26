@@ -6,4 +6,5 @@ import sumit.hrms01.model.Status;
 
 public interface StatusRepository extends CrudRepository<Status, Long>{
 
+	public Status findByStatus(String status);
 }

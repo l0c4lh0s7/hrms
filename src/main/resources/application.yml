@@ -9,4 +9,12 @@ spring:
         dialect:  org.hibernate.dialect.MySQLDialect
         id: 
           new_generator_mappings: false
-        format_sql: true 
+        format_sql: true
+client:
+  - username: user
+    password: password
+    roles: ADMIN, USER
+  - usernam: user1
+    password: password2
+    roles: USER
+    

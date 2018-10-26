@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sumit.hrms01.model.Status;
-import sumit.hrms01.service.StatusService;
+import sumit.hrms01.service.IStatusService;
 
 @RestController
 @RequestMapping("/status")
 public class StatusController {
 
 	@Autowired
-	StatusService statusService;
+	IStatusService statusService;
 	
 	@RequestMapping( value="/list", 
 			method= RequestMethod.GET

@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sumit.hrms01.model.Job_description;
-import sumit.hrms01.service.JobDescriptionService;
+import sumit.hrms01.service.IJobDescriptionService;
 
 @RestController
 @RequestMapping("/jobdesc")
 public class JobDescriptionController {
 
 	@Autowired
-	JobDescriptionService jdService;
+	IJobDescriptionService jdService;
 	
 	@RequestMapping( value="/list", 
 			method= RequestMethod.GET
@@ -55,4 +55,6 @@ public class JobDescriptionController {
 		jd.setId(id);
 		this.jdService.delete(jd);
 	}
+	
+	
 }

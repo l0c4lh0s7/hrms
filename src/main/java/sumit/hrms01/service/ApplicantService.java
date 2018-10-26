@@ -1,11 +1,13 @@
 package sumit.hrms01.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sumit.hrms01.exceptions.ApplicantNotFoundException;
 import sumit.hrms01.model.Applicant;
 import sumit.hrms01.repository.ApplicantRepository;
 
@@ -17,8 +19,7 @@ public class ApplicantService implements IApplicantService {
 	
 	@Override
 	public Collection<Applicant> list(){
-		Collection<Applicant> applicants = (Collection<Applicant>) this.applicantRepository.findAll();
-		return applicants;
+		return (Collection<Applicant>) this.applicantRepository.findAll();
 	}
 	
 	@Override
@@ -42,6 +43,29 @@ public class ApplicantService implements IApplicantService {
 	
 	@Override
 	public Applicant findById(Long id) {
-		return this.applicantRepository.findById(id).get();
+		Optional<Applicant> applicant =  this.applicantRepository.findById(id);
+		if(!applicant.isPresent())
+			throw new ApplicantNotFoundException("id : " + id + " is not associated with any user");
+		else
+			return applicant.get();
+	}
+	
+	@Override
+	public Collection<Applicant> getAppliedCandidate(Collection<Long> candidateIds){
+		return (Collection<Applicant>) this.applicantRepository.findAllById(candidateIds);
+	}
+	
+	@Override
+	public Collection<Applicant> getAllWithStatusId(Long statusId){
+		return this.applicantRepository.getAllByStatusId(statusId);
+	}
+
+	@Override
+	public Collection<String> getAllUserName() {
+		Collection<String> userNames =new ArrayList<String>(); 
+				for(Applicant applicant: this.list()) {
+					userNames.add(applicant.getName());
+				}
+		return userNames;
 	}
 }

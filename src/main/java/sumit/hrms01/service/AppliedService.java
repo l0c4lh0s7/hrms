@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 
 import sumit.hrms01.model.Applied_to;
 import sumit.hrms01.repository.AppliedRepository;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +44,23 @@ public class AppliedService implements IAppliedService {
 	@Override
 	public Applied_to findById(Long id) {
 		return this.appliedRepository.findById(id).get();
+	}
+
+	@Override
+	public List<Long> getAppliedCandidateIds(Long id) {
+		List<Long> candidateIds = new ArrayList<Long>();
+		for(Applied_to applied: this.appliedRepository.findByJobId(id)) {
+			candidateIds.add(applied.getApplicantId());
+		}
+		return candidateIds;
+	}
+
+	@Override
+	public List<Long> getAppliedJobIds(Long id) {
+		List<Long> jobIds = new ArrayList<Long>();
+		for(Applied_to applied: this.appliedRepository.findByApplicantId(id)) {
+			jobIds.add(applied.getJobId());
+		}
+		return jobIds;
 	}
 }

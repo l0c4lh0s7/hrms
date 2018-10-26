@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import sumit.hrms01.model.Interviewer;
-import sumit.hrms01.service.InterviewerService;
+import sumit.hrms01.service.IInterviewerService;
 
 @RestController
 @RequestMapping("/interviewer")
 public class InterviewerController {
 
 	@Autowired
-	InterviewerService interviewerService;
+	IInterviewerService interviewerService;
 
 	@RequestMapping( value="/list", 
 			method= RequestMethod.GET

@@ -13,6 +13,7 @@ public class Applicant implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
         @JsonProperty("id")
 	private Long id;
 	
@@ -29,59 +30,76 @@ public class Applicant implements Serializable{
 	private String experience;
         
         @JsonProperty("applied_to_id")
-	private Long applied_to_id;
+        @Column( name = "applied_to_id")
+	private Long appliedToId;
         
         @JsonProperty("status_id")
-	private Long status_id;
+        @Column(name = "status_id")
+	private Long statusId;
+
+		@Override
+		public String toString() {
+			return "Applicant [id=" + id + ", name=" + name + ", dob=" + dob + ", Qualification=" + Qualification
+					+ ", experience=" + experience + ", appliedToId=" + appliedToId + ", statusId=" + statusId + "]";
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public Date getDob() {
+			return dob;
+		}
+
+		public void setDob(Date dob) {
+			this.dob = dob;
+		}
+
+		public String getQualification() {
+			return Qualification;
+		}
+
+		public void setQualification(String qualification) {
+			Qualification = qualification;
+		}
+
+		public String getExperience() {
+			return experience;
+		}
+
+		public void setExperience(String experience) {
+			this.experience = experience;
+		}
+
+		public Long getAppliedToId() {
+			return appliedToId;
+		}
+
+		public void setAppliedToId(Long appliedToId) {
+			this.appliedToId = appliedToId;
+		}
+
+		public Long getStatusId() {
+			return statusId;
+		}
+
+		public void setStatusId(Long statusId) {
+			this.statusId = statusId;
+		}
         
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Date getDob() {
-		return dob;
-	}
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-	public String getQualification() {
-		return Qualification;
-	}
-	public void setQualification(String qualification) {
-		Qualification = qualification;
-	}
-	public String getExperience() {
-		return experience;
-	}
-	public void setExperience(String experience) {
-		this.experience = experience;
-	}
-	public Long getApplied_to_id() {
-		return applied_to_id;
-	}
-	public void setApplied_to_id(Long applied_to_id) {
-		this.applied_to_id = applied_to_id;
-	}
-	public Long getStatus_id() {
-		return status_id;
-	}
-	public void setStatus_id(Long status_id) {
-		this.status_id = status_id;
-	}
-	@Override
-	public String toString() {
-		return "Applicant [id=" + id + ", name=" + name + ", dob=" + dob + ", Qualification=" + Qualification
-				+ ", experience=" + experience + ", applied_to_id=" + applied_to_id + ", status_id=" + status_id + "]";
-	}
-	
-	public Applicant() {
-	}
+        
+        
+
 }

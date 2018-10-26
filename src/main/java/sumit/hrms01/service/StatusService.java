@@ -40,4 +40,9 @@ public class StatusService implements IStatusService {
 	public Status findById(Long id) {
 		return this.statusRepository.findById(id).get();
 	}
+	
+	@Override
+	public Long getStatusId(String status) {
+		return this.statusRepository.findByStatus(status).getId();
+	}
 }
