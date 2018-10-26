@@ -16,7 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import sumit.hrms01.model.Admin;
 import sumit.hrms01.model.Applicant;
+import sumit.hrms01.service.IAdminService;
 import sumit.hrms01.service.IApplicantService;
 import sumit.hrms01.service.IRolesService;
 
@@ -36,18 +38,23 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Autowired
 	IApplicantService applicantService;
 	
+	@Autowired
+	IAdminService adminService;
+	
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		
+		List<Admin> admins =  (List<Admin>) adminService.list();
 		List<Applicant> applicants = (List<Applicant>) applicantService.list();
 		for( Applicant applicant: applicants) {
 			manager.createUser(users.username(applicant.getName()).password("DEFAULT")
 					.roles(rolesService.getRoleWithApplicantId(applicant.getId())).build());
 		}
-			manager.createUser(users.username("ADMIN").password("admin").roles("ADMIN", "USER").build());
-				
+		for( Admin admin: admins) {
+			manager.createUser(users.username(admin.getName()).password("admin")
+					.roles("ADMIN").build());
+		}
 		return manager;
 	}
 	
@@ -55,27 +62,20 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Order(1)
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable()
-				.authorizeRequests().antMatchers("/job/add").hasRole("ADMIN")
-				.and()
-				.authorizeRequests().antMatchers("/job/**").hasRole("USER")
-				.and().authorizeRequests().antMatchers("/applicant/add").permitAll()
-				.and().authorizeRequests().antMatchers("/jobdesc/add").hasRole("ADMIN")
+			http
+				// First add authorizations for admin level 
+				.authorizeRequests().antMatchers("/job/add","admin/**","/admin", "/job","/jobdesc/add").hasRole("ADMIN")
+
+				// Remove authentication from the links that are accessible to all
+				.and().authorizeRequests().antMatchers("/applicant/list").permitAll()
 				
+				// Then make all remaining requests authenticated
 				.and().authorizeRequests().anyRequest().authenticated()
+
+				// If user failed to authenticate provide them with a form to authenticate themselves
+				.and().formLogin()
 				.and().csrf().disable()
 				.httpBasic();
 		}
 	}
-	
-	@Configuration
-	@Order(2)
-	public static class RemainingAuthorizations extends WebSecurityConfigurerAdapter{
-		protected void configure(HttpSecurity http) throws Exception{
-			http
-				.authorizeRequests().anyRequest().authenticated()
-				.and().formLogin();
-		}
-	}
-
 }
