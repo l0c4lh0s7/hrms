@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class Roles implements Serializable{
+public class Permission implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,8 +24,8 @@ public class Roles implements Serializable{
 	@Column(name="applicant_id")
 	Long applicantId;
 	
-	@JsonProperty("role")
-	String role;
+	@JsonProperty("permissions")
+	String permissions;
 
 	public Long getId() {
 		return id;
@@ -43,18 +43,19 @@ public class Roles implements Serializable{
 		this.applicantId = applicantId;
 	}
 
-	public String getRole() {
-		return role;
+	public String getPermissions() {
+		return permissions;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
 	}
 
 	@Override
 	public String toString() {
-		return "Roles [id=" + id + ", applicantId=" + applicantId + ", role=" + role + "]";
+		return "Permission [id=" + id + ", applicantId=" + applicantId + ", permissions=" + permissions + "]";
 	}
-
+	
+	
 	
 }

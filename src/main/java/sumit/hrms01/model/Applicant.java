@@ -17,7 +17,11 @@ public class Applicant implements Serializable{
         @JsonProperty("id")
 	private Long id;
 	
-        @JsonProperty("name")
+		@Column(name ="is_admin")
+		@JsonProperty("isAdmin")
+	private boolean isAdmin;
+
+		@JsonProperty("name")
 	private String name;
         
         @JsonProperty("dob")
@@ -98,8 +102,14 @@ public class Applicant implements Serializable{
 		public void setStatusId(Long statusId) {
 			this.statusId = statusId;
 		}
-        
-        
-        
 
+		public boolean isAdmin() {
+			return isAdmin;
+		}
+
+		public void setAdmin(boolean isAdmin) {
+			this.isAdmin = isAdmin;
+		}
+		
+		
 }

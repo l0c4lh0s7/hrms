@@ -16,11 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import sumit.hrms01.model.Admin;
 import sumit.hrms01.model.Applicant;
-import sumit.hrms01.service.IAdminService;
 import sumit.hrms01.service.IApplicantService;
-import sumit.hrms01.service.IRolesService;
 
 @EnableWebSecurity
 public class SecurityConfig implements WebMvcConfigurer{
@@ -33,28 +30,28 @@ public class SecurityConfig implements WebMvcConfigurer{
 //	String []roles;
 	
 	@Autowired
-	IRolesService rolesService;
-	
-	@Autowired
 	IApplicantService applicantService;
 	
-	@Autowired
-	IAdminService adminService;
 	
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		List<Admin> admins =  (List<Admin>) adminService.list();
 		List<Applicant> applicants = (List<Applicant>) applicantService.list();
+		
+//		manager.createUser(users.username("dummyUser").password("DEFAULT")
+//				.roles("USER").build());
+		
 		for( Applicant applicant: applicants) {
+			if( !applicant.isAdmin() )
 			manager.createUser(users.username(applicant.getName()).password("DEFAULT")
-					.roles(rolesService.getRoleWithApplicantId(applicant.getId())).build());
+					.roles("USER").build());
+			else
+				manager.createUser(users.username(applicant.getName()).password("admin")
+						.roles("ADMIN").build());
+			
 		}
-		for( Admin admin: admins) {
-			manager.createUser(users.username(admin.getName()).password("admin")
-					.roles("ADMIN").build());
-		}
+		
 		return manager;
 	}
 	

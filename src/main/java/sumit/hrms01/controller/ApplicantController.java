@@ -1,5 +1,6 @@
 package sumit.hrms01.controller;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sumit.hrms01.model.Applicant;
-import sumit.hrms01.model.Roles;
+import sumit.hrms01.model.Permission;
 import sumit.hrms01.service.IApplicantService;
-import sumit.hrms01.service.IRolesService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/applicant")
 public class ApplicantController {
 
 	@Autowired
 	IApplicantService applicantService;
-	
-	@Autowired
-	IRolesService rolesService;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+		
 	@RequestMapping( value="/list", 
 					method= RequestMethod.GET
 					)
@@ -39,10 +36,13 @@ public class ApplicantController {
 	public void insertApplicant(@RequestBody Applicant applicant) {
 		System.out.println(applicant.toString());
 		this.applicantService.insert(applicant);
-		Roles role = new Roles();
-		role.setApplicantId(applicant.getId());
-		role.setRole("USER");
- 		this.rolesService.insert(role);
+		Permission permission = new Permission();
+		permission.setApplicantId(applicant.getId());
+		if( applicant.isAdmin() ) {
+			String permissionArray[]  = {"ADMIN"};
+		}
+		String[] permissionArray = null;
+		permission.setPermissions(Arrays.toString(permissionArray));
 	}
 	
 	@RequestMapping( value = "/update",

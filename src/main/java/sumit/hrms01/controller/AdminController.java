@@ -7,19 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import sumit.hrms01.model.Admin;
-import sumit.hrms01.service.IAdminService;
+import sumit.hrms01.model.Applicant;
+import sumit.hrms01.service.IApplicantService;
+
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
-	IAdminService adminService;
+	IApplicantService applicantService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public Collection<Admin> addAdmin() {
-		return this.adminService.list();
+	public Collection<Applicant> addAdmin() {
+		return this.applicantService.list();
 	}
 	
 }
