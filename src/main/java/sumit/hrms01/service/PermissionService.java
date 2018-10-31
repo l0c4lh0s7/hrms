@@ -10,18 +10,28 @@ import sumit.hrms01.repository.PermissionRepository;
 public class PermissionService implements IPermissionService {
 
 	@Autowired
-	PermissionRepository rolesRepository;
+	PermissionRepository permissionRepository;
 	
 	@Override
-	public String[] getPermissionWithApplicantId(Long applicantId) {
-		Permission permission = this.rolesRepository.findByApplicantId(applicantId);
+	public String[] getPermissionWithUserId(Long userId) {
+		Permission permission = this.permissionRepository.findByUserId(userId);
 		String []permissions = permission.getPermissions().split(",");
 		return permissions;
 	}
 
 	@Override
 	public void insert(Permission permission) {
-		this.rolesRepository.save(permission);
+		this.permissionRepository.save(permission);
 	}
 	
+	public void update(Permission permission) {
+		if( this.permissionRepository.findById(permission.getId()) != null )
+			this.permissionRepository.save(permission);
+	}
+	
+	public void delete(Permission permission) {
+		if( this.permissionRepository.existsById(permission.getId()))
+			this.permissionRepository.delete(permission);
+		
+	}
 }

@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import sumit.hrms01.model.Applicant;
+import sumit.hrms01.model.User;
 import sumit.hrms01.model.Job_description;
-import sumit.hrms01.service.IApplicantService;
 import sumit.hrms01.service.IAppliedService;
 import sumit.hrms01.service.IJobDescriptionService;
 import sumit.hrms01.service.IStatusService;
+import sumit.hrms01.service.IUserService;
 
 @RestController
 @RequestMapping("/job")
@@ -31,7 +31,7 @@ public class JobController {
 	IAppliedService appliedService;
 	
 	@Autowired
-	IApplicantService applicantService;
+	IUserService userService;
 	
 	@RequestMapping( method = RequestMethod.GET)
 	public Collection<Job_description> getAllJobs(){
@@ -56,30 +56,30 @@ public class JobController {
 	@RequestMapping(value = "/{job}/applied", 
 					method = RequestMethod.GET
 					)
-	public Collection<Applicant> getListOfCandidatesAppliedToJob(@PathVariable ("job") Long job){
+	public Collection<User> getListOfCandidatesAppliedToJob(@PathVariable ("job") Long job){
 		List<Long> candidateIds = this.appliedService.getAppliedCandidateIds(job);
-		return this.applicantService.getAppliedCandidate(candidateIds);
+		return this.userService.getAppliedCandidate(candidateIds);
 	}
 	
 	// candidate whose status is statusName
 	@RequestMapping( value = "/applied/candidate/{status}", 
 					 method = RequestMethod.GET
 					 )
-	public Collection<Applicant> getCandidatesWithStatus(@PathVariable ("status") String status){
+	public Collection<User> getCandidatesWithStatus(@PathVariable ("status") String status){
 		Long statusId = this.statusService.getStatusId(status);
-		return this.applicantService.getAllWithStatusId(statusId);
+		return this.userService.getAllWithStatusId(statusId);
 	}
 	
 	// Candidate applied at job id and are having statusName
 	@RequestMapping( value = "/{job}/applied/candidate/{status}", 
 					 method = RequestMethod.GET
 				)
-	public Collection<Applicant> getCandidatesWithJobidAndStatus(@PathVariable("job") Long job, 
+	public Collection<User> getCandidatesWithJobidAndStatus(@PathVariable("job") Long job, 
 																@PathVariable("status")String status){
-		Collection<Applicant> applicantWithGivenJobId= this.getListOfCandidatesAppliedToJob(job);
-		Collection<Applicant> applicantWithGivenStatus = this.getCandidatesWithStatus(status);
-		Collection<Applicant> result = new ArrayList<Applicant>();
-		for( Applicant applicant: applicantWithGivenJobId) {
+		Collection<User> applicantWithGivenJobId= this.getListOfCandidatesAppliedToJob(job);
+		Collection<User> applicantWithGivenStatus = this.getCandidatesWithStatus(status);
+		Collection<User> result = new ArrayList<User>();
+		for( User applicant: applicantWithGivenJobId) {
 			if(applicantWithGivenStatus.contains(applicant))
 				result.add(applicant);
 		}

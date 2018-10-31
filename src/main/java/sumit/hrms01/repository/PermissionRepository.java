@@ -6,5 +6,5 @@ import sumit.hrms01.model.Permission;
 
 public interface PermissionRepository extends CrudRepository<Permission, Long>{
 	
-	public Permission findByApplicantId(Long applicantId);
+	public Permission findByUserId(Long userId);
 }

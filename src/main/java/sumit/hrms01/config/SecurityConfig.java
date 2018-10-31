@@ -1,6 +1,7 @@
 package sumit.hrms01.config;
 
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import sumit.hrms01.model.Applicant;
-import sumit.hrms01.service.IApplicantService;
+//import sumit.hrms01.model.User;
+import sumit.hrms01.service.IUserService;
 
 @EnableWebSecurity
 public class SecurityConfig implements WebMvcConfigurer{
@@ -30,19 +32,19 @@ public class SecurityConfig implements WebMvcConfigurer{
 //	String []roles;
 	
 	@Autowired
-	IApplicantService applicantService;
+	IUserService userService;
 	
 	
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		List<Applicant> applicants = (List<Applicant>) applicantService.list();
+		List<sumit.hrms01.model.User> applicants =  userService.list();
 		
-//		manager.createUser(users.username("dummyUser").password("DEFAULT")
-//				.roles("USER").build());
+		manager.createUser(users.username("dummyUser").password("DEFAULT")
+				.roles("USER").build());
 		
-		for( Applicant applicant: applicants) {
+		for( sumit.hrms01.model.User applicant: applicants) {
 			if( !applicant.isAdmin() )
 			manager.createUser(users.username(applicant.getName()).password("DEFAULT")
 					.roles("USER").build());
@@ -58,13 +60,15 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Configuration
 	@Order(1)
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
+		
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				// First add authorizations for admin level 
-				.authorizeRequests().antMatchers("/job/add","admin/**","/admin", "/job","/jobdesc/add").hasRole("ADMIN")
+//				.authorizeRequests().antMatchers("/job/add","admin/**","/admin", "/job","/jobdesc/add").hasRole("ADMIN")
 
-				// Remove authentication from the links that are accessible to all
-				.and().authorizeRequests().antMatchers("/applicant/list").permitAll()
+			// Remove authentication from the links that are accessible to all
+				.authorizeRequests().antMatchers("/**").permitAll()
+//			    .authorizeRequests().antMatchers("/user/register","user/list").permitAll()
 				
 				// Then make all remaining requests authenticated
 				.and().authorizeRequests().anyRequest().authenticated()

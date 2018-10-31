@@ -6,10 +6,12 @@ spring:
   jpa:
     properties:
       hibernate:
+        ddl-auto: update
         dialect:  org.hibernate.dialect.MySQLDialect
         id: 
           new_generator_mappings: false
         format_sql: true
+        
 client:
   - username: user
     password: password
