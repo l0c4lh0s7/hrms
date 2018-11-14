@@ -73,6 +73,14 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Date getDob() {
 		return dob;
 	}
@@ -121,21 +129,6 @@ public class User implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", dob=" + dob + ", Qualification=" + Qualification
-				+ ", experience=" + experience + ", appliedToId=" + appliedToId + ", statusId=" + statusId
-				+ ", isAdmin=" + isAdmin + ", credential=" + credential + "]";
-	}
-
 	public Credential getCredential() {
 		return credential;
 	}
@@ -143,5 +136,15 @@ public class User implements Serializable {
 	public void setCredential(Credential credential) {
 		this.credential = credential;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", dob=" + dob + ", Qualification="
+				+ Qualification + ", experience=" + experience + ", appliedToId=" + appliedToId + ", statusId="
+				+ statusId + ", isAdmin=" + isAdmin + ", credential=" + credential + "]";
+	}
+
+
+	
 
 }

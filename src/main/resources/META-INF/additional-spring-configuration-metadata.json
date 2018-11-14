@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "security.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'security.secret'"
+  },
+  {
+    "name": "security.token_prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'security.token_prefix'"
+  },
+  {
+    "name": "security.header_string",
+    "type": "java.lang.String",
+    "description": "A description for 'security.header_string'"
+  },
+  {
+    "name": "security.expiration_time",
+    "type": "java.lang.String",
+    "description": "A description for 'security.expiration_time'"
+  },
+  {
+    "name": "auth.username",
+    "type": "java.lang.String",
+    "description": "A description for 'auth.username'"
+  }
+]}

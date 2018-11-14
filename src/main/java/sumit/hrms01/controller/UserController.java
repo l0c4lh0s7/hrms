@@ -3,6 +3,7 @@ package sumit.hrms01.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,14 +26,14 @@ public class UserController {
 	
 	@Autowired
 	ICredentialService credentialService;
-		
+
 	@RequestMapping( value="/list", 
 					method= RequestMethod.GET
 					)
 	public List<User> list(){
 		return this.userService.list();
 	}
-	
+
 //	//Just for checking if credential entity is working properly
 //	@RequestMapping(value="/cred")
 //	public Credential getcred() {
@@ -40,16 +41,17 @@ public class UserController {
 //	}
 	
 	
+	@CrossOrigin
 	@RequestMapping( value = "/register", 
 					 method = RequestMethod.POST
 					 )
-	public void insertUser(@RequestBody User user) {
-		System.out.println(user);
-		System.out.println("lksadfksd");
+	public String insertUser(@RequestBody User user) {
 		Credential cred = user.getCredential();
+		String pass = user.getCredential().getPassword();
 		this.userService.insert(user);
 		cred.setUser(user);
 		this.credentialService.insert(cred);
+		return "[ user : id = " + user.getId() + " ] ";
 	}
 	
 	@RequestMapping( value = "/update",

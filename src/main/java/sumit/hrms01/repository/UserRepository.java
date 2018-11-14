@@ -9,4 +9,6 @@ import sumit.hrms01.model.User;
 public interface UserRepository extends CrudRepository<User, Long>{
 
 	public Collection<User> getAllByStatusId(Long statusId);
+	
+	public User findByEmail(String email);
 }

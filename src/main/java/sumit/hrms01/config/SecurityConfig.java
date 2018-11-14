@@ -1,19 +1,26 @@
-package sumit.hrms01.config;
+/*package sumit.hrms01.config;
 
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import java.util.Collection;
+// This is complete earlier code 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sumit.hrms01.service.IUserService;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig implements WebMvcConfigurer{
 
 //	@Value("${client[0].username}")
@@ -34,6 +42,8 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Autowired
 	IUserService userService;
 	
+	
+
 	
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
@@ -61,22 +71,33 @@ public class SecurityConfig implements WebMvcConfigurer{
 	@Order(1)
 	public static class Authorizations extends WebSecurityConfigurerAdapter{
 		
+		@Autowired
+		IUserService userService;
+		
+		@Bean
+		public PasswordEncoder passwordEncoder() {
+			 return new BCryptPasswordEncoder();
+		}
+		
+		// Added http security to the endpoints
+		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http
-				// First add authorizations for admin level 
-//				.authorizeRequests().antMatchers("/job/add","admin/**","/admin", "/job","/jobdesc/add").hasRole("ADMIN")
-
-			// Remove authentication from the links that are accessible to all
-				.authorizeRequests().antMatchers("/**").permitAll()
-//			    .authorizeRequests().antMatchers("/user/register","user/list").permitAll()
-				
-				// Then make all remaining requests authenticated
-				.and().authorizeRequests().anyRequest().authenticated()
-
-				// If user failed to authenticate provide them with a form to authenticate themselves
-				.and().formLogin()
-				.and().csrf().disable()
-				.httpBasic();
+				.cors().and().csrf().disable()
+				.authorizeRequests()
+				.antMatchers("/job/list").hasAnyRole("USER")
+				.anyRequest().authenticated()
+				.and().httpBasic();
 		}
+		
+		// Any request that needs to be allowed is placed here 
+		@Override
+		public void configure(WebSecurity web) throws Exception{
+			web.ignoring().antMatchers("/*", "/user/list", "/login");
+		}
+		
+		 
 	}
 }
+
+*/

@@ -23,4 +23,6 @@ public interface IUserService {
 
 	Collection<String> getAllUserName();
 
+	User findByEmail(String email);
+
 }
