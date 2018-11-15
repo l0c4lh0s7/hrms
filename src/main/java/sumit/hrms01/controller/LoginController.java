@@ -42,7 +42,7 @@ public class LoginController {
 			String pass = user.getCredential().getPassword();
 			if( savedPass.equals(pass)) {
 				returnValue =  "success login";
-				String token = JWTTokenManager.createToken(dbUser.getEmail(), dbUser.isAdmin());
+				String token = JWTTokenManager.createToken(dbUser.getEmail(), dbUser.isAdmin(), dbUser.getName());
 				headers.add("Authorization", token);
 			}
 			else

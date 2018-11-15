@@ -22,14 +22,16 @@ public class ValidationController {
 	
 	/**
 	 * parameter : email 
-	 * returns true if email is not in the list 
+	 * returns true if email is the list 
 	 * else false 
 	 */
 	@RequestMapping(value="email", method=RequestMethod.GET)
 	public boolean validateEmail(@RequestParam("email") String email) {
-			if( this.userService.findByEmail(email) != null) 
-				return false;
-		return true;
+			if( this.userService.findByEmail(email) != null) {
+				System.out.println(this.userService.findByEmail(email));
+				return true;
+			}
+		return false;
 	}
 	
 }

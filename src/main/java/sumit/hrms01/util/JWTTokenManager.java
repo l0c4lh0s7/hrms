@@ -9,10 +9,11 @@ public class JWTTokenManager {
 	public static final long EXPIRATION_TIME = 864_000_000; // 10 days
 	public static final String SECRET = "SecretKeyToGenJWTs";
 
-	public static String createToken(String subject, boolean isAdmin) {
+	public static String createToken(String subject, boolean isAdmin, String name) {
 		String token = Jwts.builder()
 				.setSubject(subject)
 				.claim("admin" , isAdmin)
+				.claim("name", name)
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS256, SECRET)
 				.compact();

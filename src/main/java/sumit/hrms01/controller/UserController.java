@@ -45,13 +45,13 @@ public class UserController {
 	@RequestMapping( value = "/register", 
 					 method = RequestMethod.POST
 					 )
-	public String insertUser(@RequestBody User user) {
+	public void insertUser(@RequestBody User user) {
 		Credential cred = user.getCredential();
 		String pass = user.getCredential().getPassword();
 		this.userService.insert(user);
 		cred.setUser(user);
 		this.credentialService.insert(cred);
-		return "[ user : id = " + user.getId() + " ] ";
+		
 	}
 	
 	@RequestMapping( value = "/update",
