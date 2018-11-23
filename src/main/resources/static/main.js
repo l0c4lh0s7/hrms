@@ -120,12 +120,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _job_job_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./job/job.component */ "./src/app/job/job.component.ts");
 /* harmony import */ var _notfound_notfound_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./notfound/notfound.component */ "./src/app/notfound/notfound.component.ts");
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
+/* harmony import */ var _create_job_create_job_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./create-job/create-job.component */ "./src/app/create-job/create-job.component.ts");
+/* harmony import */ var _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./create-user/create-user.component */ "./src/app/create-user/create-user.component.ts");
+/* harmony import */ var _service_user_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./service/user.service */ "./src/app/service/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -173,7 +179,9 @@ var AppModule = /** @class */ (function () {
                 _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_25__["DashboardComponent"],
                 _job_job_component__WEBPACK_IMPORTED_MODULE_26__["JobComponent"],
                 _notfound_notfound_component__WEBPACK_IMPORTED_MODULE_27__["NotfoundComponent"],
-                _user_user_component__WEBPACK_IMPORTED_MODULE_28__["UserComponent"]
+                _user_user_component__WEBPACK_IMPORTED_MODULE_28__["UserComponent"],
+                _create_job_create_job_component__WEBPACK_IMPORTED_MODULE_29__["CreateJobComponent"],
+                _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_30__["CreateUserComponent"]
             ],
             imports: [
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
@@ -184,6 +192,16 @@ var AppModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forRoot([
                     // AuthAccessService : means you must be logged in
                     // AuthGuardService :  means you must be admin 
+                    {
+                        path: 'createUser',
+                        component: _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_30__["CreateUserComponent"],
+                        canActivate: [_service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__["AuthAccessService"], _service_auth_guard_service__WEBPACK_IMPORTED_MODULE_18__["AuthGuardService"]]
+                    },
+                    {
+                        path: 'createJob',
+                        component: _create_job_create_job_component__WEBPACK_IMPORTED_MODULE_29__["CreateJobComponent"],
+                        canActivate: [_service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__["AuthAccessService"], _service_auth_guard_service__WEBPACK_IMPORTED_MODULE_18__["AuthGuardService"]]
+                    },
                     {
                         path: "user/:id",
                         component: _user_user_component__WEBPACK_IMPORTED_MODULE_28__["UserComponent"]
@@ -220,6 +238,10 @@ var AppModule = /** @class */ (function () {
                         component: _home_home_component__WEBPACK_IMPORTED_MODULE_10__["HomeComponent"]
                     },
                     {
+                        path: 'home',
+                        component: _home_home_component__WEBPACK_IMPORTED_MODULE_10__["HomeComponent"]
+                    },
+                    {
                         path: 'applicant',
                         component: _applicant_applicant_component__WEBPACK_IMPORTED_MODULE_8__["ApplicantComponent"],
                         canActivate: [_service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__["AuthAccessService"], _service_auth_guard_service__WEBPACK_IMPORTED_MODULE_18__["AuthGuardService"]]
@@ -234,7 +256,7 @@ var AppModule = /** @class */ (function () {
                     }
                 ])
             ],
-            providers: [
+            providers: [_service_user_service__WEBPACK_IMPORTED_MODULE_31__["UserService"],
                 _service_applicant_service__WEBPACK_IMPORTED_MODULE_7__["ApplicantService"],
                 _service_job_service__WEBPACK_IMPORTED_MODULE_21__["JobService"],
                 _service_login_service__WEBPACK_IMPORTED_MODULE_17__["LoginService"],
@@ -490,6 +512,190 @@ var NameValidator = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/create-job/create-job.component.css":
+/*!*****************************************************!*\
+  !*** ./src/app/create-job/create-job.component.css ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/create-job/create-job.component.html":
+/*!******************************************************!*\
+  !*** ./src/app/create-job/create-job.component.html ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create Job</h2>\n      </div>\n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"jobCreationForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" formControlName=\"position\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"vacancies\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"filled\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                  <div class=\"col-lg-9\">\n                      <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\"></textarea>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\"  formControlName=\"ctc\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                  formControlName=\"isActive\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                  formControlName=\"isActive\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                  formControlName=\"bond\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                  formControlName=\"bond\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"bond_years\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div> \n<hr />"
+
+/***/ }),
+
+/***/ "./src/app/create-job/create-job.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/create-job/create-job.component.ts ***!
+  \****************************************************/
+/*! exports provided: CreateJobComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateJobComponent", function() { return CreateJobComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _service_job_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/job.service */ "./src/app/service/job.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CreateJobComponent = /** @class */ (function () {
+    function CreateJobComponent(formBuilder, jobService, router) {
+        this.jobService = jobService;
+        this.router = router;
+        this.jobCreationForm = formBuilder.group({
+            position: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            vacancies: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            filled: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            description: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            ctc: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            bond: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            bond_years: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            isActive: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]]
+        });
+    }
+    CreateJobComponent.prototype.ngOnInit = function () {
+    };
+    CreateJobComponent.prototype.onSubmit = function () {
+        var data = this.jobCreationForm.value;
+        this.jobService.createJob(data).subscribe(function (response) {
+            console.log('response: ' + response);
+        });
+        this.router.navigate(['/dashboard']);
+    };
+    CreateJobComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'create-job',
+            template: __webpack_require__(/*! ./create-job.component.html */ "./src/app/create-job/create-job.component.html"),
+            styles: [__webpack_require__(/*! ./create-job.component.css */ "./src/app/create-job/create-job.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], _service_job_service__WEBPACK_IMPORTED_MODULE_2__["JobService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], CreateJobComponent);
+    return CreateJobComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/create-user/create-user.component.css":
+/*!*******************************************************!*\
+  !*** ./src/app/create-user/create-user.component.css ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/create-user/create-user.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/create-user/create-user.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create New User</h2>\n      </div> \n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"createUserForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" formControlName=\"name\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"email\" formControlName=\"email\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"date\" formControlName=\"dob\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"experience\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                  formControlName=\"isAdmin\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                  formControlName=\"isAdmin\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" formControlName=\"newPassword\" />\n                </div>\n            </div>\n            <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Confirm Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" formControlName=\"confirmPassword\" />\n                </div>\n            </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create user\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div>\n<hr />"
+
+/***/ }),
+
+/***/ "./src/app/create-user/create-user.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/create-user/create-user.component.ts ***!
+  \******************************************************/
+/*! exports provided: CreateUserComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateUserComponent", function() { return CreateUserComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _service_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/user.service */ "./src/app/service/user.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CreateUserComponent = /** @class */ (function () {
+    function CreateUserComponent(formBuilder, router, userService) {
+        this.router = router;
+        this.userService = userService;
+        this.createUserForm = formBuilder.group({
+            newPassword: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            confirmPassword: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            qualification: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            id: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            name: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            dob: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            experience: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            isAdmin: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]]
+        });
+    }
+    CreateUserComponent.prototype.ngOnInit = function () {
+    };
+    CreateUserComponent.prototype.onSubmit = function () {
+        console.log("New user created : ");
+        this.userService.createUser(this.formatInputData(this.createUserForm.value)).subscribe();
+        this.router.navigate(['/dashboard']);
+    };
+    CreateUserComponent.prototype.formatInputData = function (data) {
+        var pass = data['newPassword'];
+        delete data['newPassword'];
+        delete data['confirmPassword'];
+        data['credential'] = {
+            'password': pass
+        };
+        return data;
+    };
+    CreateUserComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'create-user',
+            template: __webpack_require__(/*! ./create-user.component.html */ "./src/app/create-user/create-user.component.html"),
+            styles: [__webpack_require__(/*! ./create-user.component.css */ "./src/app/create-user/create-user.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _service_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"]])
+    ], CreateUserComponent);
+    return CreateUserComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/dashboard/dashboard.component.css":
 /*!***************************************************!*\
   !*** ./src/app/dashboard/dashboard.component.css ***!
@@ -508,7 +714,7 @@ module.exports = ".card{\r\n    box-shadow: 2px 2px 10px #DADADA;\r\n    margin:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Jobs </h2>\n            </div>\n            <div class=\"col-lg-2\">\n                <span class=\"custom-link\"><i class=\"fa fa-plus\" (click)=\"newJob()\">Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let job of jobs \">\n              <p>\n                <i class=\"fa fa-file\"></i> Job for <strong>{{ job.position }}</strong> ,\n                Vacancies - <strong>{{ job.vacancies }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editJob(job.id)\"><i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteJob(job.id)\"><i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\" (click)=\"listAppliedCandidate(job.id)\">List of applied Candidates</span>\n              </p>\n                <ul *ngIf=\"selectedId == job.id\">\n                  <li *ngFor=\"let user of userList\">\n                    <i class=\"fa fa-user\"></i>\n                    <a [routerLink]=\"['/user',user.id]\">{{ user.name }}</a>\n                  </li>\n                </ul>\n            </li>\n          </ul>\n        </div>\n  </div>\n  \n\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Users </h2>\n            </div>\n            <div class=\"col-lg-2\">\n              <span class=\"custom-link\"><i class=\"fa fa-plus\" (click)=\"newUser()\">Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let user of users \">\n              <p><i class=\"fa fa-user\"></i> <strong>{{ user.name }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editUser(user.id)\">\n                  <i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteUser(user.id)\">\n                  <i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\">List of applied Jobs</span>\n              </p>\n            </li>\n          </ul>\n        </div>\n  </div>\n\n</div>"
+module.exports = "<h1 style=\"text-align:center\">DASHBOARD</h1>\n<div class=\"row\">\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Jobs </h2>\n            </div>\n            <div class=\"col-lg-2\">\n                <span class=\"custom-link\"><i class=\"fa fa-plus\" (click)=\"addnewJob()\">Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let job of jobs \">\n              <p>\n                <i class=\"fa fa-file\"></i> Job for <strong>{{ job.position }}</strong> ,\n                Vacancies - <strong>{{ job.vacancies }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editJob(job.id)\"><i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteJob(job.id)\"><i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\" (click)=\"listAppliedCandidate(job.id)\">List of applied Candidates</span>\n              </p>\n                <ul *ngIf=\"selectedJobId == job.id\">\n                  <li *ngFor=\"let user of userList\">\n                    <i class=\"fa fa-user\"></i>\n                    <a [routerLink]=\"['/user',user.id]\">{{ user.name }}</a>\n                  </li>\n                </ul>\n            </li>\n          </ul>\n        </div>\n  </div>\n  \n\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Users </h2>\n            </div>\n            <div class=\"col-lg-2\">\n              <span class=\"custom-link\" (click)=\"addnewUser()\"><i class=\"fa fa-plus\" >Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let user of users \">\n              <p><i class=\"fa fa-user\"></i> <strong>{{ user.name }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editUser(user.id)\">\n                  <i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteUser(user.id)\">\n                  <i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\" (click)=\"listAppliedJob(user.id)\">List of applied Jobs</span>\n              </p>\n              <ul *ngIf=\"selectedUserId == user.id\">\n                <li *ngFor=\"let job of jobList\">\n                  <i class=\"fa fa-file\"></i>\n                  <a [routerLink]=\"['/job',job.id]\">Applied for {{ job.position }}</a>\n                </li>\n              </ul>\n            </li>\n          </ul>\n        </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -569,26 +775,55 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.listAppliedCandidate = function (jobId) {
         var _this = this;
         console.log("list is clicked for jobId : " + jobId);
-        this.selectedId = jobId;
-        this.jobService.getApplied(jobId).subscribe(function (response) {
+        this.selectedJobId = jobId;
+        this.jobService.getAppliedCandidates(jobId).subscribe(function (response) {
             _this.userList = response;
         });
     };
-    DashboardComponent.prototype.addJob = function () {
+    DashboardComponent.prototype.addnewJob = function () {
         console.log("new job add ");
+        this.router.navigate(['/createJob']);
     };
     DashboardComponent.prototype.editJob = function (jobId) {
         console.log("jobId : " + jobId);
         this.router.navigate(['/job', jobId]);
     };
     DashboardComponent.prototype.deleteJob = function (jobId) {
+        var _this = this;
+        console.log("deleting job with id : " + jobId);
+        this.jobService.delete(jobId).subscribe(function () {
+            for (var i = _this.jobs.length - 1; i--;) {
+                if (_this.jobs[i].id === jobId)
+                    _this.jobs.splice(i, 1);
+            }
+        });
+        this.router.navigate(['']);
     };
-    DashboardComponent.prototype.addUser = function () {
+    DashboardComponent.prototype.addnewUser = function () {
         console.log("Add a new user ");
+        this.router.navigate(['/createUser']);
     };
     DashboardComponent.prototype.editUser = function (userId) {
+        console.log("userId : " + userId);
+        this.router.navigate(['/user', userId]);
     };
     DashboardComponent.prototype.deleteUser = function (userId) {
+        var _this = this;
+        console.log('deleting user with userId : ' + userId);
+        this.userService.delete(userId).subscribe(function () {
+            for (var i = _this.users.length - 1; i--;) {
+                if (_this.users[i].id === userId)
+                    _this.users.splice(i, 1);
+            }
+        });
+        this.router.navigate(['']);
+    };
+    DashboardComponent.prototype.listAppliedJob = function (userId) {
+        var _this = this;
+        this.selectedUserId = userId;
+        this.userService.getAppliedJobs(userId).subscribe(function (response) {
+            _this.jobList = response;
+        });
     };
     DashboardComponent.prototype.toggle = function (variable) {
         return !variable;
@@ -708,7 +943,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div>\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"jobEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.position\" formControlName=\"position\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.vacancies\" formControlName=\"vacancies\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.filled\" formControlName=\"filled\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                    <div class=\"col-lg-9\">\n                        <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\">{{ job.description }}</textarea>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.ctc\" formControlName=\"ctc\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                    formControlName=\"bond\" [checked]=\"job.bond\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                    formControlName=\"bond\" [checked]=\"!job.bond\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.bond_years\" formControlName=\"bond_years\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div>\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"jobEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.position\" formControlName=\"position\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.vacancies\" formControlName=\"vacancies\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.filled\" formControlName=\"filled\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                    <div class=\"col-lg-9\">\n                        <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\">{{ job.description }}</textarea>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.ctc\" formControlName=\"ctc\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                    formControlName=\"isActive\" [checked]=\"job.isActive\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                    formControlName=\"isActive\" [checked]=\"!job.isActive\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                    formControlName=\"bond\" [checked]=\"job.bond\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                    formControlName=\"bond\" [checked]=\"!job.bond\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.bond_years\" formControlName=\"bond_years\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
 
 /***/ }),
 
@@ -1518,8 +1753,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ApplicantService = /** @class */ (function (_super) {
     __extends(ApplicantService, _super);
     function ApplicantService(http) {
-        return _super.call(this, "http://localhost:8080/user/list", http) || this;
+        return _super.call(this, "http://localhost:8080/user", http) || this;
     }
+    ApplicantService.prototype.getAppliedJobs = function (userId) {
+        return this.http.get(this.url + "/" + userId + '/applied');
+    };
     ApplicantService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -1629,7 +1867,8 @@ var DataService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
     };
     DataService.prototype.delete = function (resource) {
-        return this.http.delete(this.url + '/' + resource.id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
+        console.log(" value : " + this.url + '/remove/' + resource);
+        return this.http.delete(this.url + '/remove/' + resource).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
     };
     DataService.prototype.update = function (resource) {
         return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
@@ -1700,8 +1939,11 @@ var JobService = /** @class */ (function (_super) {
     function JobService(http) {
         return _super.call(this, "http://localhost:8080/job", http) || this;
     }
-    JobService.prototype.getApplied = function (jobId) {
+    JobService.prototype.getAppliedCandidates = function (jobId) {
         return this.http.get(this.url + "/" + jobId + '/applied');
+    };
+    JobService.prototype.createJob = function (resource) {
+        return this.http.post(this.url + "/create", resource);
     };
     JobService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -1855,6 +2097,64 @@ var RegisterService = /** @class */ (function (_super) {
 
 /***/ }),
 
+/***/ "./src/app/service/user.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/service/user.service.ts ***!
+  \*****************************************/
+/*! exports provided: UserService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data.service */ "./src/app/service/data.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var UserService = /** @class */ (function (_super) {
+    __extends(UserService, _super);
+    function UserService(http) {
+        var _this = _super.call(this, "http://localhost:8080/user", http) || this;
+        _this.url = "http://localhost:8080/user";
+        return _this;
+    }
+    UserService.prototype.createUser = function (resource) {
+        return this.http.post(this.url + '/register', resource);
+    };
+    UserService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    ], UserService);
+    return UserService;
+}(_data_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]));
+
+
+
+/***/ }),
+
 /***/ "./src/app/service/validation.service.ts":
 /*!***********************************************!*\
   !*** ./src/app/service/validation.service.ts ***!
@@ -1924,7 +2224,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <!-- <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div> -->\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"userEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"user.name\" formControlName=\"name\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.email\" formControlName=\"email\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"date\" [value]=\"job.filled\" formControlName=\"dob\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.ctc\" formControlName=\"experience\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                    formControlName=\"isAdmin\" [checked]=\"user.isAdmin\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                    formControlName=\"isAdmin\" [checked]=\"!user.isAdmin\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>User Details</h2>\n        </div> \n        <!-- <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div> -->\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"userEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"user.name\" formControlName=\"name\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"email\" [value]=\"user.email\" formControlName=\"email\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"date\" [value]=\"user.dob\" formControlName=\"dob\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"user.experience\" formControlName=\"experience\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                    formControlName=\"isAdmin\" [checked]=\"user.isAdmin\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                    formControlName=\"isAdmin\" [checked]=\"!user.isAdmin\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
 
 /***/ }),
 
@@ -1963,21 +2263,20 @@ var UserComponent = /** @class */ (function () {
         this.route.params.subscribe(function (params) {
             _this.url = 'http://localhost:8080/user/' + params.id;
             _this.applicantService.getAll(_this.url).subscribe(function (response) {
-                _this.a = response;
-                _this.user = _this.a;
+                _this.user = response;
+                _this.userEditForm = formBuilder.group({
+                    // credential : [this.user.credential],
+                    qualification: [_this.user.qualification],
+                    id: [_this.user.id],
+                    name: [_this.user.name],
+                    email: [_this.user.email],
+                    dob: [_this.user.dob],
+                    experience: [_this.user.experience],
+                    applied_to_id: [_this.user.applied_to_id],
+                    status_id: [_this.user.status_id],
+                    isAdmin: [_this.user.isAdmin]
+                });
             });
-        });
-        this.userEditForm = formBuilder.group({
-            // credential : [this.user.credential],
-            qualification: [this.user.qualification],
-            id: [this.user.id],
-            name: [this.user.name],
-            email: [this.user.email],
-            dob: [this.user.dob],
-            experience: [this.user.experience],
-            applied_to_id: [this.user.applied_to_id],
-            status_id: [this.user.status_id],
-            isAdmin: [this.user.isAdmin]
         });
     }
     UserComponent.prototype.ngOnInit = function () {

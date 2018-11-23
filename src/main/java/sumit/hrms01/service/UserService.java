@@ -44,6 +44,7 @@ public class UserService implements IUserService {
 	@Override
 	public void delete(User user) {
 		Optional<User> existingUser = this.userRepository.findById(user.getId());
+		System.out.println(existingUser.toString());
 		if( existingUser.isPresent())
 			this.userRepository.delete(existingUser.get());
 	}

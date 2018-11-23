@@ -93,4 +93,20 @@ public class JobController {
 		System.out.println("Got request to update : " +  jd);
 		this.jobDescriptionService.update(jd);
 	}
+	
+	@RequestMapping( value = "/create", 
+			method = RequestMethod.POST
+			)
+	public void insertJob_description(@RequestBody Job_description jd) {
+		this.jobDescriptionService.insert(jd);
+	}
+	
+	@RequestMapping( value="/remove/{id}", 
+			method = RequestMethod.DELETE
+			)
+	public void delete(@PathVariable ("id") Long id) {
+		Job_description jd = new Job_description();
+		jd.setId(id);
+		this.jobDescriptionService.delete(jd);
+	}
 }

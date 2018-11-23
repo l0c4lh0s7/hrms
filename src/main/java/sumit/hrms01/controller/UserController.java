@@ -1,5 +1,6 @@
 package sumit.hrms01.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import sumit.hrms01.model.Credential;
+import sumit.hrms01.model.Job_description;
 import sumit.hrms01.model.User;
+import sumit.hrms01.service.IAppliedService;
 import sumit.hrms01.service.ICredentialService;
+import sumit.hrms01.service.IJobDescriptionService;
 import sumit.hrms01.service.IUserService;
 
 @RestController
@@ -26,10 +30,14 @@ public class UserController {
 	
 	@Autowired
 	ICredentialService credentialService;
+	
+	@Autowired
+	IAppliedService appliedService;
+	
+	@Autowired
+	IJobDescriptionService jobDescriptionService;
 
-	@RequestMapping( value="/list", 
-					method= RequestMethod.GET
-					)
+	@RequestMapping( method= RequestMethod.GET)
 	public List<User> list(){
 		return this.userService.list();
 	}
@@ -74,7 +82,15 @@ public class UserController {
 					 )
 	public void delete(@PathVariable ("id") Long id) {
 		User user = new User();
+		System.out.println(id + " this : " + user.toString());
 		user.setId(id);
 		this.userService.delete(user);
+	}
+	
+	@RequestMapping( value = "{id}/applied")
+	public Collection<Job_description> getAppliedJobs(@PathVariable("id") Long id){
+		List<Long> jobIds = this.appliedService.getAppliedJobIds(id);
+		return this.jobDescriptionService.getAllJobsWithIds(jobIds);
+		
 	}
 }
