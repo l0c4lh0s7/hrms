@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,5 +87,10 @@ public class JobController {
 		return result;
 	}
 		
-	
+	@RequestMapping( value = "/update",
+			method = RequestMethod.PUT)
+	public void updateJob_description(@RequestBody Job_description jd) {
+		System.out.println("Got request to update : " +  jd);
+		this.jobDescriptionService.update(jd);
+	}
 }

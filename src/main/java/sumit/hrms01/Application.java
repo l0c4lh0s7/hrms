@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 public class Application {
 
 

@@ -116,12 +116,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./service/AuthAccess.service */ "./src/app/service/AuthAccess.service.ts");
 /* harmony import */ var _service_BasicAuthInterceptor__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./service/BasicAuthInterceptor */ "./src/app/service/BasicAuthInterceptor.ts");
 /* harmony import */ var _not_logged_in_not_logged_in_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./not-logged-in/not-logged-in.component */ "./src/app/not-logged-in/not-logged-in.component.ts");
+/* harmony import */ var _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./dashboard/dashboard.component */ "./src/app/dashboard/dashboard.component.ts");
+/* harmony import */ var _job_job_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./job/job.component */ "./src/app/job/job.component.ts");
+/* harmony import */ var _notfound_notfound_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./notfound/notfound.component */ "./src/app/notfound/notfound.component.ts");
+/* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
 
 
 
@@ -161,7 +169,11 @@ var AppModule = /** @class */ (function () {
                 _register_register_component__WEBPACK_IMPORTED_MODULE_12__["RegisterComponent"],
                 _not_allowed_not_allowed_component__WEBPACK_IMPORTED_MODULE_19__["NotAllowedComponent"],
                 _jobs_jobs_component__WEBPACK_IMPORTED_MODULE_20__["JobsComponent"],
-                _not_logged_in_not_logged_in_component__WEBPACK_IMPORTED_MODULE_24__["NotLoggedInComponent"]
+                _not_logged_in_not_logged_in_component__WEBPACK_IMPORTED_MODULE_24__["NotLoggedInComponent"],
+                _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_25__["DashboardComponent"],
+                _job_job_component__WEBPACK_IMPORTED_MODULE_26__["JobComponent"],
+                _notfound_notfound_component__WEBPACK_IMPORTED_MODULE_27__["NotfoundComponent"],
+                _user_user_component__WEBPACK_IMPORTED_MODULE_28__["UserComponent"]
             ],
             imports: [
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
@@ -170,9 +182,25 @@ var AppModule = /** @class */ (function () {
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_2__["HttpModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forRoot([
+                    // AuthAccessService : means you must be logged in
+                    // AuthGuardService :  means you must be admin 
+                    {
+                        path: "user/:id",
+                        component: _user_user_component__WEBPACK_IMPORTED_MODULE_28__["UserComponent"]
+                    },
+                    {
+                        path: "job/:id",
+                        component: _job_job_component__WEBPACK_IMPORTED_MODULE_26__["JobComponent"],
+                        canActivate: [_service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__["AuthAccessService"]]
+                    },
                     {
                         path: "register",
                         component: _register_register_component__WEBPACK_IMPORTED_MODULE_12__["RegisterComponent"]
+                    },
+                    {
+                        path: "dashboard",
+                        component: _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_25__["DashboardComponent"],
+                        canActivate: [_service_AuthAccess_service__WEBPACK_IMPORTED_MODULE_22__["AuthAccessService"], _service_auth_guard_service__WEBPACK_IMPORTED_MODULE_18__["AuthGuardService"]]
                     },
                     {
                         path: "jobs",
@@ -199,6 +227,10 @@ var AppModule = /** @class */ (function () {
                     {
                         path: 'notallowed',
                         component: _not_allowed_not_allowed_component__WEBPACK_IMPORTED_MODULE_19__["NotAllowedComponent"],
+                    },
+                    {
+                        path: "**",
+                        component: _notfound_notfound_component__WEBPACK_IMPORTED_MODULE_27__["NotfoundComponent"]
                     }
                 ])
             ],
@@ -458,6 +490,126 @@ var NameValidator = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/dashboard/dashboard.component.css":
+/*!***************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.css ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".card{\r\n    box-shadow: 2px 2px 10px #DADADA;\r\n    margin: 5px;\r\n    padding: 20px 10px;\r\n    background-color: #fff;\r\n    height: 100px;\r\n    border-radius: 5px;\r\n    transition: .3s linear all;\r\n    height: 300px;\r\n  }\r\n\r\n  .card:hover{\r\n    box-shadow: 4px 4px 90px #DADADA;\r\n    transition: .3s linear all;\r\n  }\r\n\r\n  .hidden{\r\n    display: none;\r\n  }\r\n\r\n  .full{\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n  }\r\n\r\n  .child-i{\r\n    margin: 10px;\r\n  }\r\n\r\n  .custom-link{\r\n    color:green;\r\n     cursor: pointer;\r\n  }\r\n\r\n  .card.change-i i{\r\n    font-size: 5em;\r\n    top: 20%;\r\n    bottom: 20%;\r\n    opacity: 0.2;\r\n  }\r\n\r\n  /* .card.primary{\r\n    background-color: #007bff;\r\n    color: #FFF;\r\n  }\r\n\r\n  .card.info{\r\n    background-color: #26c6da;\r\n    color: #FFF;\r\n  }   */\r\n\r\n  /* .card .count-numbers{\r\n    position: absolute;\r\n    right: 35px;\r\n    top: 20px;\r\n    font-size: 32px;\r\n    display: block;\r\n    cursor: pointer;\r\n  } */\r\n\r\n  /* .card .count-name{\r\n    position: absolute;\r\n    right: 35px;\r\n    bottom: 20px;\r\n    font-style: italic;\r\n    text-transform: capitalize;\r\n    opacity: 0.5;\r\n    display: block;\r\n    color: black;\r\n    font-weight: bolder;\r\n    font-size: 18px;\r\n  } */\r\n\r\n "
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.html ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Jobs </h2>\n            </div>\n            <div class=\"col-lg-2\">\n                <span class=\"custom-link\"><i class=\"fa fa-plus\" (click)=\"newJob()\">Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let job of jobs \">\n              <p>\n                <i class=\"fa fa-file\"></i> Job for <strong>{{ job.position }}</strong> ,\n                Vacancies - <strong>{{ job.vacancies }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editJob(job.id)\"><i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteJob(job.id)\"><i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\" (click)=\"listAppliedCandidate(job.id)\">List of applied Candidates</span>\n              </p>\n                <ul *ngIf=\"selectedId == job.id\">\n                  <li *ngFor=\"let user of userList\">\n                    <i class=\"fa fa-user\"></i>\n                    <a [routerLink]=\"['/user',user.id]\">{{ user.name }}</a>\n                  </li>\n                </ul>\n            </li>\n          </ul>\n        </div>\n  </div>\n  \n\n  <div class=\"col-md-6\">\n      <div class=\"container card full\">\n          <div class=\"row\">\n            <div class=\"col-lg-10\">\n              <h2>Users </h2>\n            </div>\n            <div class=\"col-lg-2\">\n              <span class=\"custom-link\"><i class=\"fa fa-plus\" (click)=\"newUser()\">Add</i></span>\n            </div>\n          </div>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let user of users \">\n              <p><i class=\"fa fa-user\"></i> <strong>{{ user.name }}</strong>\n                <button class=\"btn btn-primary btn-xs float-right child-i\" (click)=\"editUser(user.id)\">\n                  <i class=\"fa fa-pencil\"></i></button>\n                <button class=\"btn btn-danger btn-xs float-right child-i\" (click)=\"deleteUser(user.id)\">\n                  <i class=\"fa fa-trash\"></i></button>\n                <br><span class=\"custom-link\">List of applied Jobs</span>\n              </p>\n            </li>\n          </ul>\n        </div>\n  </div>\n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.ts ***!
+  \**************************************************/
+/*! exports provided: DashboardComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_job_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/job.service */ "./src/app/service/job.service.ts");
+/* harmony import */ var _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/applicant.service */ "./src/app/service/applicant.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var DashboardComponent = /** @class */ (function () {
+    function DashboardComponent(jobService, userService, router) {
+        this.jobService = jobService;
+        this.userService = userService;
+        this.router = router;
+    }
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.jobService.getAll().subscribe(function (response) {
+            _this.jobs = response;
+            _this.numJobs = _this.jobs.length;
+        });
+        this.userService.getAll().subscribe(function (response) {
+            _this.users = response;
+            _this.numUsers = _this.users.length;
+        });
+        this.showJob = true;
+        this.showUser = true;
+    };
+    DashboardComponent.prototype.showJobs = function () {
+        this.showJob = this.toggle(this.showJob);
+        this.showUser = false;
+    };
+    DashboardComponent.prototype.showUsers = function () {
+        this.showUser = this.toggle(this.showUser);
+        this.showJob = false;
+    };
+    DashboardComponent.prototype.listAppliedCandidate = function (jobId) {
+        var _this = this;
+        console.log("list is clicked for jobId : " + jobId);
+        this.selectedId = jobId;
+        this.jobService.getApplied(jobId).subscribe(function (response) {
+            _this.userList = response;
+        });
+    };
+    DashboardComponent.prototype.addJob = function () {
+        console.log("new job add ");
+    };
+    DashboardComponent.prototype.editJob = function (jobId) {
+        console.log("jobId : " + jobId);
+        this.router.navigate(['/job', jobId]);
+    };
+    DashboardComponent.prototype.deleteJob = function (jobId) {
+    };
+    DashboardComponent.prototype.addUser = function () {
+        console.log("Add a new user ");
+    };
+    DashboardComponent.prototype.editUser = function (userId) {
+    };
+    DashboardComponent.prototype.deleteUser = function (userId) {
+    };
+    DashboardComponent.prototype.toggle = function (variable) {
+        return !variable;
+    };
+    DashboardComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'dashboard',
+            template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/dashboard/dashboard.component.html"),
+            styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/dashboard/dashboard.component.css")]
+        }),
+        __metadata("design:paramtypes", [_service_job_service__WEBPACK_IMPORTED_MODULE_1__["JobService"],
+            _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__["ApplicantService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], DashboardComponent);
+    return DashboardComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/home/home.component.css":
 /*!*****************************************!*\
   !*** ./src/app/home/home.component.css ***!
@@ -492,6 +644,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _service_login_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/login.service */ "./src/app/service/login.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -503,17 +656,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(loginService) {
-        var isToken = !!loginService.decodedToken();
+    function HomeComponent(loginService, router) {
+        this.router = router;
+        var decoded = loginService.decodedToken();
+        var isToken = !!decoded;
         if (isToken) {
-            this.userName = loginService.decodedToken().name;
+            this.userName = decoded.name;
+            this.isAdmin = decoded.admin;
         }
         else {
             this.userName = null;
         }
     }
     HomeComponent.prototype.ngOnInit = function () {
+        if (this.isAdmin) {
+            this.router.navigate(['dashboard']);
+        }
     };
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -521,9 +681,121 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/home/home.component.html"),
             styles: [__webpack_require__(/*! ./home.component.css */ "./src/app/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [_service_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"]])
+        __metadata("design:paramtypes", [_service_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], HomeComponent);
     return HomeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/job/job.component.css":
+/*!***************************************!*\
+  !*** ./src/app/job/job.component.css ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/job/job.component.html":
+/*!****************************************!*\
+  !*** ./src/app/job/job.component.html ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div>\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"jobEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.position\" formControlName=\"position\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.vacancies\" formControlName=\"vacancies\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.filled\" formControlName=\"filled\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                    <div class=\"col-lg-9\">\n                        <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\">{{ job.description }}</textarea>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.ctc\" formControlName=\"ctc\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                    formControlName=\"bond\" [checked]=\"job.bond\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                    formControlName=\"bond\" [checked]=\"!job.bond\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.bond_years\" formControlName=\"bond_years\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+
+/***/ }),
+
+/***/ "./src/app/job/job.component.ts":
+/*!**************************************!*\
+  !*** ./src/app/job/job.component.ts ***!
+  \**************************************/
+/*! exports provided: JobComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JobComponent", function() { return JobComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var JobComponent = /** @class */ (function () {
+    function JobComponent(formBuilder, route, http, router) {
+        var _this = this;
+        this.route = route;
+        this.http = http;
+        this.router = router;
+        this.route.params.subscribe(function (params) {
+            _this.url = 'http://localhost:8080/job/' + params.id;
+        });
+        this.http.get(this.url).subscribe(function (response) {
+            _this.a = response;
+            _this.job = _this.a;
+            _this.jobEditForm = formBuilder.group({
+                id: [_this.job.id],
+                position: [_this.job.position],
+                vacancies: [_this.job.vacancies],
+                filled: [_this.job.filled],
+                description: [_this.job.description],
+                ctc: [_this.job.ctc],
+                bond: [_this.job.bond],
+                bond_years: [_this.job.bond_years],
+                applied_to_id: [_this.job.applied_to_id],
+                interviewer_id: [_this.job.interviewer_id],
+                isActive: [_this.job.isActive]
+            });
+        });
+    }
+    JobComponent.prototype.ngOnInit = function () {
+    };
+    JobComponent.prototype.cancel = function () {
+        console.log('cancel is clicked and called ');
+        this.router.navigate(['']);
+    };
+    JobComponent.prototype.onSubmit = function () {
+        var _this = this;
+        console.log("Save changes is clicked and called ");
+        this.http.put("http://localhost:8080/job/update", this.jobEditForm.value)
+            .subscribe(function (response) {
+            console.log("backend response : " + response);
+        }, function (error) {
+            console.log("error  : " + error);
+        });
+        console.log("Made a put call to the server with these values : " + this.jobEditForm.value);
+        this.changesSaved = true;
+        setTimeout(function () {
+            _this.changesSaved = false;
+        }, 5000);
+    };
+    JobComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-job',
+            template: __webpack_require__(/*! ./job.component.html */ "./src/app/job/job.component.html"),
+            styles: [__webpack_require__(/*! ./job.component.css */ "./src/app/job/job.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+    ], JobComponent);
+    return JobComponent;
 }());
 
 
@@ -548,7 +820,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<h3> JOB PORTAL  </h3>\n<ul clas=\"list-group\">\n<li class=\"list-group-item\" *ngFor=\"let job of jobs\">\n<i class=\"fa fa-star\"></i> Job for {{ job.position }} - <h5>Vacancies : {{ job.vacancies }}</h5>\n</li>\n  </ul>\n"
+module.exports = "\n<h3> JOB PORTAL  </h3>\n<ul class=\"list-group\">\n<li class=\"list-group-item\" *ngFor=\"let job of jobs\">\n<i class=\"fa fa-star\"></i> Job for {{ job.position }} - <h5>Vacancies : {{ job.vacancies }}</h5>\n</li>\n  </ul>\n"
 
 /***/ }),
 
@@ -715,7 +987,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-light bg-light mb-5\">\n  <a class=\"navbar-brand\" routerLink=\"home\">HRMS</a>\n  <div class=\"navbar-expand mr-auto\">\n    <div class=\"navbar-nav\">\n      <a class=\"nav-item nav-link\" routerLink=\"\" routerLinkActive=\"active\">Home</a>\n      <a class=\"nav-item nav-link\" routerLink=\"applicant\" routerLinkActive=\"active\">Applicant</a>\n      <a class=\"nav-item nav-link\" routerLink=\"jobs\" routerLinkActive=\"active\">Jobs</a>\n    </div>\n  </div>\n  <div class=\"navbar-expand ml-auto navbar-nav\">\n    <div class=\"navbar-nav\">\n      <button class=\"btn btn-success\" routerLink=\"login\" *ngIf=\"!loggedIn\" >Login</button>\n      <button class=\"btn btn-danger\" routerLink=\"login\" *ngIf=\"loggedIn\" (click)=\"onLogout()\">Logout</button>\n      <a class=\"nav-item nav-link\" href=\"https://github.com/l0c4lh0s7/hrms\" target=\"_blank\">\n        <i class=\"fa fa-github\"></i>\n      </a>\n      <a class=\"nav-item nav-link\" href=\"#\" target=\"_blank\">\n        <i class=\"fa fa-twitter\"></i>\n      </a>\n      <a class=\"nav-item nav-link\" href=\"#\" target=\"_blank\">\n        <i class=\"fa fa-medium\"></i>\n      </a>\n    </div>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-light bg-light mb-5\">\n  <a class=\"navbar-brand\" routerLink=\"home\">HRMS</a>\n  <div class=\"navbar-expand mr-auto\">\n    <div class=\"navbar-nav\">\n      <a class=\"nav-item nav-link\" routerLink=\"\" routerLinkActive=\"active\">Home</a>\n      <a class=\"nav-item nav-link\" routerLink=\"applicant\" routerLinkActive=\"active\">Applicant</a>\n      <a class=\"nav-item nav-link\" routerLink=\"jobs\" routerLinkActive=\"active\">Jobs</a>\n    </div>\n  </div>\n  <div class=\"navbar-expand ml-auto navbar-nav\">\n    <div class=\"navbar-nav\">\n      <button class=\"btn btn-success\" routerLink=\"login\" *ngIf=\"!loggedIn\" >Login</button>\n      <button class=\"btn btn-danger\" routerLink=\"login\" *ngIf=\"loggedIn\" (click)=\"onLogout()\">Logout</button>\n      <a class=\"nav-item nav-link\" href=\"https://github.com/l0c4lh0s7/hrms\" target=\"_blank\">\n        <i class=\"fa fa-github\"></i>\n      </a>\n      <a class=\"nav-item nav-link\" href=\"#\" target=\"_blank\">\n        <i class=\"fa fa-twitter\"></i>\n      </a> \n      <a class=\"nav-item nav-link\" href=\"#\" target=\"_blank\">\n        <i class=\"fa fa-medium\"></i>\n      </a>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -890,6 +1162,69 @@ var NotLoggedInComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], NotLoggedInComponent);
     return NotLoggedInComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/notfound/notfound.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/notfound/notfound.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/notfound/notfound.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/notfound/notfound.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>This link is not mapped yet !!!</h1>\n"
+
+/***/ }),
+
+/***/ "./src/app/notfound/notfound.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/notfound/notfound.component.ts ***!
+  \************************************************/
+/*! exports provided: NotfoundComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotfoundComponent", function() { return NotfoundComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var NotfoundComponent = /** @class */ (function () {
+    function NotfoundComponent() {
+    }
+    NotfoundComponent.prototype.ngOnInit = function () {
+    };
+    NotfoundComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'notfound',
+            template: __webpack_require__(/*! ./notfound.component.html */ "./src/app/notfound/notfound.component.html"),
+            styles: [__webpack_require__(/*! ./notfound.component.css */ "./src/app/notfound/notfound.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], NotfoundComponent);
+    return NotfoundComponent;
 }());
 
 
@@ -1288,8 +1623,9 @@ var DataService = /** @class */ (function () {
         this.url = url;
         this.http = http;
     }
-    DataService.prototype.getAll = function () {
-        return this.http.get(this.url)
+    DataService.prototype.getAll = function (url) {
+        var link = url ? url : this.url;
+        return this.http.get(link)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
     };
     DataService.prototype.delete = function (resource) {
@@ -1364,6 +1700,9 @@ var JobService = /** @class */ (function (_super) {
     function JobService(http) {
         return _super.call(this, "http://localhost:8080/job", http) || this;
     }
+    JobService.prototype.getApplied = function (jobId) {
+        return this.http.get(this.url + "/" + jobId + '/applied');
+    };
     JobService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -1561,6 +1900,97 @@ var ValidationService = /** @class */ (function () {
         __metadata("design:paramtypes", [_node_modules_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], ValidationService);
     return ValidationService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/user/user.component.css ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.html":
+/*!******************************************!*\
+  !*** ./src/app/user/user.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <!-- <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div> -->\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"userEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"user.name\" formControlName=\"name\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.email\" formControlName=\"email\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"date\" [value]=\"job.filled\" formControlName=\"dob\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.ctc\" formControlName=\"experience\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                    formControlName=\"isAdmin\" [checked]=\"user.isAdmin\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                    formControlName=\"isAdmin\" [checked]=\"!user.isAdmin\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/user/user.component.ts ***!
+  \****************************************/
+/*! exports provided: UserComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserComponent", function() { return UserComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/applicant.service */ "./src/app/service/applicant.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var UserComponent = /** @class */ (function () {
+    function UserComponent(route, applicantService, formBuilder) {
+        var _this = this;
+        this.route = route;
+        this.applicantService = applicantService;
+        this.route.params.subscribe(function (params) {
+            _this.url = 'http://localhost:8080/user/' + params.id;
+            _this.applicantService.getAll(_this.url).subscribe(function (response) {
+                _this.a = response;
+                _this.user = _this.a;
+            });
+        });
+        this.userEditForm = formBuilder.group({
+            // credential : [this.user.credential],
+            qualification: [this.user.qualification],
+            id: [this.user.id],
+            name: [this.user.name],
+            email: [this.user.email],
+            dob: [this.user.dob],
+            experience: [this.user.experience],
+            applied_to_id: [this.user.applied_to_id],
+            status_id: [this.user.status_id],
+            isAdmin: [this.user.isAdmin]
+        });
+    }
+    UserComponent.prototype.ngOnInit = function () {
+    };
+    UserComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-user',
+            template: __webpack_require__(/*! ./user.component.html */ "./src/app/user/user.component.html"),
+            styles: [__webpack_require__(/*! ./user.component.css */ "./src/app/user/user.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__["ApplicantService"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"]])
+    ], UserComponent);
+    return UserComponent;
 }());
 
 
