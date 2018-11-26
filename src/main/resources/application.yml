@@ -16,3 +16,5 @@ spring:
       name: user
       password: thisispassword
       roles: ADMIN
+  cache:
+    type: NONE

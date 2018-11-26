@@ -123,12 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _create_job_create_job_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./create-job/create-job.component */ "./src/app/create-job/create-job.component.ts");
 /* harmony import */ var _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./create-user/create-user.component */ "./src/app/create-user/create-user.component.ts");
 /* harmony import */ var _service_user_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./service/user.service */ "./src/app/service/user.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -257,6 +259,7 @@ var AppModule = /** @class */ (function () {
                 ])
             ],
             providers: [_service_user_service__WEBPACK_IMPORTED_MODULE_31__["UserService"],
+                _angular_common__WEBPACK_IMPORTED_MODULE_32__["DatePipe"],
                 _service_applicant_service__WEBPACK_IMPORTED_MODULE_7__["ApplicantService"],
                 _service_job_service__WEBPACK_IMPORTED_MODULE_21__["JobService"],
                 _service_login_service__WEBPACK_IMPORTED_MODULE_17__["LoginService"],
@@ -284,7 +287,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".fa.fa-user-circle-o{\r\n  font-size: 48px;\r\n}\r\n.container{\r\n    padding:5%;\r\n}\r\n.container .img{\r\n    text-align:center;\r\n}\r\n.container .details{\r\n    border-left:3px solid #ded4da;\r\n}\r\n.container .details p{\r\n    font-size:15px;\r\n    font-weight:bold;\r\n}\r\n.row{\r\n  padding: 20px;\r\n}\r\n"
+module.exports = ".card{\r\n    box-shadow: 2px 2px 10px #DADADA;\r\n    margin: 5px;\r\n    padding: 20px 10px;\r\n    background-color: #fff;\r\n    height: 100px;\r\n    border-radius: 5px;\r\n    transition: .3s linear all;\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n  }\r\n\r\n.fa.fa-user-circle-o{\r\n  font-size: 48px;\r\n}\r\n\r\n.container{\r\n    padding:5%;\r\n}\r\n\r\n.container .img{\r\n    text-align:center;\r\n}\r\n\r\n.container .details{\r\n    border-left:3px solid #ded4da;\r\n}\r\n\r\n.container .details p{\r\n    font-size:15px;\r\n    font-weight:bold;\r\n}\r\n\r\n.row{\r\n  padding: 20px;\r\n}\r\n"
 
 /***/ }),
 
@@ -295,7 +298,7 @@ module.exports = ".fa.fa-user-circle-o{\r\n  font-size: 48px;\r\n}\r\n.container
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h2>Users</h2>\n  <div class=\"container\">\n    <div class=\"row\" *ngFor=\"let applicant of applicants\">\n      <div class=\"col-md-6 img\">\n        <i class=\"fa fa-user-circle-o\"></i>\n      </div>\n      <div class=\"col-md-6 details\">\n        <blockquote>\n          <h5>{{ applicant.name }}</h5>\n          <small><cite title=\"Source Title\">{{ applicant.qualification }}  <i class=\"icon-map-marker\"></i></cite></small>\n        </blockquote>\n        <p>\n          {{ applicant.dob }}\n        </p>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h2>Users</h2>\n  <div class=\"container card\">\n    <div class=\"row card\" *ngFor=\"let applicant of applicants\">\n      <div class=\"col-md-6 img\">\n        <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png\" class=\"img-rounded\">\n      </div>\n      <div class=\"col-md-6 details\">\n        <blockquote>\n          <h5>{{ applicant.name }}</h5>\n          <small><cite title=\"Source Title\">{{ applicant.qualification }}  <i class=\"icon-map-marker\"></i></cite></small>\n        </blockquote>\n        <p>\n          {{ applicant.dob }}\n        </p>\n      </div>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -512,6 +515,41 @@ var NameValidator = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/commons/validators/password.validators.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/commons/validators/password.validators.ts ***!
+  \***********************************************************/
+/*! exports provided: PasswordValidators */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PasswordValidators", function() { return PasswordValidators; });
+var PasswordValidators = /** @class */ (function () {
+    function PasswordValidators() {
+    }
+    // static validOldPassword(control: AbstractControl){
+    //   return new Promise((resolve) => {
+    //     if(control.value != '1234')
+    //       resolve ({ invalidOldPassword: true })
+    //     else
+    //       resolve(null)
+    //   })
+    // }
+    PasswordValidators.passwordShouldMatch = function (control) {
+        var newPassword = control.get('newPassword').value;
+        var confirmPassword = control.get('confirmPassword').value;
+        if (newPassword !== confirmPassword)
+            return ({ passwordShouldMatch: true });
+        return (null);
+    };
+    return PasswordValidators;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/create-job/create-job.component.css":
 /*!*****************************************************!*\
   !*** ./src/app/create-job/create-job.component.css ***!
@@ -530,7 +568,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create Job</h2>\n      </div>\n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"jobCreationForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" formControlName=\"position\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"vacancies\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"filled\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                  <div class=\"col-lg-9\">\n                      <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\"></textarea>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\"  formControlName=\"ctc\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                  formControlName=\"isActive\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                  formControlName=\"isActive\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                  formControlName=\"bond\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                  formControlName=\"bond\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"bond_years\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div> \n<hr />"
+module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create Job</h2>\n      </div>\n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"jobCreationForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" name=\"position\" formControlName=\"position\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"position?.touched && position?.invalid\">\n                        <div *ngIf=\"position?.errors.required\">This is a required field</div> \n                      </div>\n                </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" name=\"vacancies\" type=\"number\" formControlName=\"vacancies\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"vacancies?.touched && vacancies?.invalid\">\n                        <div *ngIf=\"vacancies?.errors.required\">This is a required field</div> \n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" name=\"filled\" type=\"number\" formControlName=\"filled\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"filled?.touched && filled?.invalid\">\n                        <div *ngIf=\"filled?.errors.required\">This is a required field</div> \n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                  <div class=\"col-lg-9\">\n                      <textarea class=\"form-control\" name=\"description\" rows=\"10\" cols=\"30\" formControlName=\"description\"></textarea>\n                      <div class=\"alert alert-danger\" *ngIf=\"description?.touched && description?.invalid\">\n                        <div *ngIf=\"description?.errors.required\">This is a required field</div> \n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\"  name=\"ctc\" formControlName=\"ctc\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"ctc?.touched && ctc?.invalid\">\n                        <div *ngIf=\"ctc?.errors.required\">This is a required field</div> \n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                  formControlName=\"isActive\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                  formControlName=\"isActive\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                  formControlName=\"bond\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                  formControlName=\"bond\" checked>No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" name=\"bond_years\" formControlName=\"bond_years\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"bond_years?.touched && bond_years?.invalid\">\n                        <div *ngIf=\"bond_years?.errors.required\">This is a required field</div> \n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div> \n<hr />"
 
 /***/ }),
 
@@ -585,6 +623,62 @@ var CreateJobComponent = /** @class */ (function () {
         });
         this.router.navigate(['/dashboard']);
     };
+    Object.defineProperty(CreateJobComponent.prototype, "position", {
+        get: function () {
+            return this.jobCreationForm.get('position');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "vacanciees", {
+        get: function () {
+            return this.jobCreationForm.get('vacancies');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "filled", {
+        get: function () {
+            return this.jobCreationForm.get('filled');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "description", {
+        get: function () {
+            return this.jobCreationForm.get('description');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "ctc", {
+        get: function () {
+            return this.jobCreationForm.get('ctc');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "bond", {
+        get: function () {
+            return this.jobCreationForm.get('bond');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "bond_years", {
+        get: function () {
+            return this.jobCreationForm.get('bond_years');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateJobComponent.prototype, "isActive", {
+        get: function () {
+            return this.jobCreationForm.get('isActive');
+        },
+        enumerable: true,
+        configurable: true
+    });
     CreateJobComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'create-job',
@@ -618,7 +712,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create New User</h2>\n      </div> \n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"createUserForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" formControlName=\"name\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"email\" formControlName=\"email\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"date\" formControlName=\"dob\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" formControlName=\"experience\" />\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                  formControlName=\"isAdmin\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                  formControlName=\"isAdmin\">No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" formControlName=\"newPassword\" />\n                </div>\n            </div>\n            <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Confirm Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" formControlName=\"confirmPassword\" />\n                </div>\n            </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create user\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div>\n<hr />"
+module.exports = "<div class=\"container\">\n  <div class=\"row m-y-2\">\n      <!-- edit form column -->\n      <div class=\"col-lg-10 text-lg-center\">\n          <h2>Create New User</h2>\n      </div> \n      <div class=\"col-lg-10\">\n          <form role=\"form\" [formGroup]=\"createUserForm\" (ngSubmit)=\"onSubmit()\">\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"text\" name=\"Name\" formControlName=\"Name\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"Name?.touched && Name?.invalid\">\n                        <div *ngIf=\"Name?.errors.required\">this is a required Field</div>\n                      </div> \n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"email?.touched && email?.invalid\">\n                        <div *ngIf=\"email?.errors.required\">this is a required Field</div>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"date\" name=\"dob\" formControlName=\"dob\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"dob?.touched && dob?.invalid\">\n                        <div *ngIf=\"dob?.errors.required\">this is a required Field</div>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                  <div class=\"col-lg-9\">\n                      <input class=\"form-control\" type=\"number\" name=\"experience\" formControlName=\"experience\" />\n                      <div class=\"alert alert-danger\" *ngIf=\"experience?.touched && experience?.invalid\">\n                        <div *ngIf=\"experience?.errors.required\">this is a required Field</div>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                  <div class=\"col-lg-9\">\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio1\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                  formControlName=\"isAdmin\">Yes\n                          </label>\n                      </div>\n                      <div class=\"form-check-inline\">\n                          <label class=\"form-check-label\" for=\"radio2\">\n                              <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                  formControlName=\"isAdmin\" checked>No\n                          </label>\n                      </div>\n                  </div>\n              </div>\n              <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" name=\"newpassword\" formControlName=\"newPassword\" />\n                    <div class=\"alert alert-danger\" *ngIf=\"newPassword?.touched && newPassword?.invalid\">\n                        <div *ngIf=\"newPassword?.errors.required\">this is a required Field</div>\n                      </div>\n                </div>\n            </div>\n            <div class=\"form-group row\">\n                <label class=\"col-lg-3 col-form-label form-control-label\">Confirm Password</label>\n                <div class=\"col-lg-9\">\n                    <input class=\"form-control\" type=\"password\" name=\"confirmPassword\" formControlName=\"confirmPassword\" />\n                    <div class=\"alert alert-danger\" *ngIf=\"confirmPassword?.touched && confirmPassword?.invalid\">\n                        <div *ngIf=\"confirmPassword?.errors.required\">this is a required Field</div>\n                        <!-- <div *ngIf=\"confirmPassword?.errors.passwordShouldMatch\">Passwords did not match</div> -->\n                      </div>\n                      <div *ngIf=\"confirmPassword?.valid && createUserForm?.invalid && createUserForm?.errors?.passwordShouldMatch\" class=\"alert alert-danger\">\n                        Password did not match\n                      </div>\n                </div>\n            </div>\n              <div class=\"form-group row\">\n                  <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                  <div class=\"col-lg-9\">\n                      <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"reset()\" style=\"margin: 10px\">Reset</Button>\n                      <input type=\"submit\" class=\"btn btn-primary\" value=\"Create user\" style=\"margin: 10px\">\n                  </div>\n              </div>\n          </form>\n      </div>\n  </div>\n</div>\n<hr />"
 
 /***/ }),
 
@@ -636,6 +730,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _service_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/user.service */ "./src/app/service/user.service.ts");
+/* harmony import */ var _commons_validators_password_validators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../commons/validators/password.validators */ "./src/app/commons/validators/password.validators.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -649,6 +744,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var CreateUserComponent = /** @class */ (function () {
     function CreateUserComponent(formBuilder, router, userService) {
         this.router = router;
@@ -658,11 +754,13 @@ var CreateUserComponent = /** @class */ (function () {
             confirmPassword: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             qualification: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             id: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
-            name: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
+            Name: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             dob: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             experience: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             isAdmin: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]]
+        }, {
+            validator: _commons_validators_password_validators__WEBPACK_IMPORTED_MODULE_4__["PasswordValidators"].passwordShouldMatch
         });
     }
     CreateUserComponent.prototype.ngOnInit = function () {
@@ -673,6 +771,9 @@ var CreateUserComponent = /** @class */ (function () {
         this.router.navigate(['/dashboard']);
     };
     CreateUserComponent.prototype.formatInputData = function (data) {
+        var name = data['Name'];
+        delete data['Name'];
+        data['name'] = name;
         var pass = data['newPassword'];
         delete data['newPassword'];
         delete data['confirmPassword'];
@@ -681,6 +782,65 @@ var CreateUserComponent = /** @class */ (function () {
         };
         return data;
     };
+    CreateUserComponent.prototype.reset = function () {
+        console.log('values reset');
+    };
+    Object.defineProperty(CreateUserComponent.prototype, "newPassword", {
+        get: function () {
+            return this.createUserForm.get('newPassword');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "confirmPassword", {
+        get: function () {
+            return this.createUserForm.get('confirmPassword');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "qualification", {
+        get: function () {
+            return this.createUserForm.get('qualification');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "Name", {
+        get: function () {
+            return this.confirmPassword.get('Name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "email", {
+        get: function () {
+            return this.confirmPassword.get('email');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "dob", {
+        get: function () {
+            return this.createUserForm.get('dob');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "experience", {
+        get: function () {
+            return this.createUserForm.get("experience");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CreateUserComponent.prototype, "isAdmin", {
+        get: function () {
+            return this.createUserForm.get('isAdmin');
+        },
+        enumerable: true,
+        configurable: true
+    });
     CreateUserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'create-user',
@@ -943,7 +1103,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div>\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"jobEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.position\" formControlName=\"position\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.vacancies\" formControlName=\"vacancies\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.filled\" formControlName=\"filled\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                    <div class=\"col-lg-9\">\n                        <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\">{{ job.description }}</textarea>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.ctc\" formControlName=\"ctc\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                    formControlName=\"isActive\" [checked]=\"job.isActive\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                    formControlName=\"isActive\" [checked]=\"!job.isActive\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                    formControlName=\"bond\" [checked]=\"job.bond\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                    formControlName=\"bond\" [checked]=\"!job.bond\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.bond_years\" formControlName=\"bond_years\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\" *ngIf=\"jobEditForm && job\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>Job Details</h2>\n        </div>\n        <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div>\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"jobEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Position</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.position\" formControlName=\"position\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Vacancies</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.vacancies\" formControlName=\"vacancies\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Filled</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.filled\" formControlName=\"filled\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Description</label>\n                    <div class=\"col-lg-9\">\n                        <textarea class=\"form-control\" rows=\"10\" cols=\"30\" formControlName=\"description\">{{ job.description }}</textarea>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">CTC(Cost To Company)</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"job.ctc\" formControlName=\"ctc\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Active</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isActive\" value=\"true\"\n                                    formControlName=\"isActive\" [checked]=\"job.isActive\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isActive\" value=\"false\"\n                                    formControlName=\"isActive\" [checked]=\"!job.isActive\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"bond\" value=\"true\"\n                                    formControlName=\"bond\" [checked]=\"job.bond\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"bond\" value=\"false\"\n                                    formControlName=\"bond\" [checked]=\"!job.bond\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Bond Years</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"job.bond_years\" formControlName=\"bond_years\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
 
 /***/ }),
 
@@ -1871,8 +2031,8 @@ var DataService = /** @class */ (function () {
         return this.http.delete(this.url + '/remove/' + resource).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
     };
     DataService.prototype.update = function (resource) {
-        return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
+        return this.http.put(this.url + '/' + 'update', resource)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError));
         // this.http.put(this.url, JSON.stringify(resource))
     };
     DataService.prototype.create = function (resource) {
@@ -2224,7 +2384,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>User Details</h2>\n        </div> \n        <!-- <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div> -->\n        <div class=\"col-lg-10\">\n            <form role=\"form\" [formGroup]=\"userEditForm\" (ngSubmit)=\"onSubmit()\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"user.name\" formControlName=\"name\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"email\" [value]=\"user.email\" formControlName=\"email\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"date\" [value]=\"user.dob\" formControlName=\"dob\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" [value]=\"user.experience\" formControlName=\"experience\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                    formControlName=\"isAdmin\" [checked]=\"user.isAdmin\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                    formControlName=\"isAdmin\" [checked]=\"!user.isAdmin\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
+module.exports = "<div class=\"container\">\n    <div class=\"row m-y-2\">\n        <!-- edit form column -->\n        <div class=\"col-lg-10 text-lg-center\">\n            <h2>User Details</h2>\n        </div> \n        <!-- <div class=\"col-lg-8\" *ngIf=\"!job?.active\">\n            <div class=\"alert alert-danger alert-dismissable\"> <a class=\"panel-close close\" data-dismiss=\"alert\">×</a>\n                <strong>Important </strong>This job is not active ..\n            </div>\n        </div> -->\n        <div class=\"col-lg-10\" *ngIf=\"userEditForm && user\">\n            <form role=\"form\" [formGroup]=\"userEditForm\" (ngSubmit)=\"onSubmit()\" name=\"userEditForm\">\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Name</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"text\" name=\"name\" [value]=\"user.name\" formControlName=\"name\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Email</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"email\" name=\"email\" [value]=\"user.email\" formControlName=\"email\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">DOB</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"date\" name=\"dob\" [value]=\"user.dob\" formControlName=\"dob\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Experience</label>\n                    <div class=\"col-lg-9\">\n                        <input class=\"form-control\" type=\"number\" name=\"experience\" [value]=\"user.experience\" formControlName=\"experience\" />\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\">Admin</label>\n                    <div class=\"col-lg-9\">\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio1\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio1\" name=\"isAdmin\" value=\"true\"\n                                    formControlName=\"isAdmin\" [checked]=\"user.isAdmin\">Yes\n                            </label>\n                        </div>\n                        <div class=\"form-check-inline\">\n                            <label class=\"form-check-label\" for=\"radio2\">\n                                <input type=\"radio\" class=\"form-check-input\" id=\"radio2\" name=\"isAdmin\" value=\"false\"\n                                    formControlName=\"isAdmin\" [checked]=\"!user.isAdmin\">No\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"form-group row\">\n                    <label class=\"col-lg-3 col-form-label form-control-label\"></label>\n                    <div class=\"col-lg-9\">\n                        <Button type=\"reset\" class=\"btn btn-secondary\" (click)=\"cancel()\" style=\"margin: 10px\">Cancel</Button>\n                        <input type=\"submit\" class=\"btn btn-primary\" value=\"Save Changes\" style=\"margin: 10px\">\n                        <i class=\"fa fa-check\" style=\"color: green\" *ngIf=\"changesSaved\">Values Updated</i>\n                    </div>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n<hr />"
 
 /***/ }),
 
@@ -2242,6 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/applicant.service */ "./src/app/service/applicant.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2255,22 +2416,28 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UserComponent = /** @class */ (function () {
-    function UserComponent(route, applicantService, formBuilder) {
+    function UserComponent(datePipe, router, route, applicantService, formBuilder) {
         var _this = this;
+        this.datePipe = datePipe;
+        this.router = router;
         this.route = route;
         this.applicantService = applicantService;
         this.route.params.subscribe(function (params) {
             _this.url = 'http://localhost:8080/user/' + params.id;
             _this.applicantService.getAll(_this.url).subscribe(function (response) {
                 _this.user = response;
+                var value = _this.datePipe.transform(_this.user.dob, 'mm-dd-yyyy');
+                console.log("date : ", value);
                 _this.userEditForm = formBuilder.group({
-                    // credential : [this.user.credential],
+                    credential: [_this.user.credential],
+                    admin: [_this.user.admin],
                     qualification: [_this.user.qualification],
                     id: [_this.user.id],
                     name: [_this.user.name],
                     email: [_this.user.email],
-                    dob: [_this.user.dob],
+                    dob: [value],
                     experience: [_this.user.experience],
                     applied_to_id: [_this.user.applied_to_id],
                     status_id: [_this.user.status_id],
@@ -2281,13 +2448,24 @@ var UserComponent = /** @class */ (function () {
     }
     UserComponent.prototype.ngOnInit = function () {
     };
+    UserComponent.prototype.onSubmit = function () {
+        console.log("Saving changed values ");
+        this.applicantService.update(this.userEditForm.value).subscribe();
+        this.router.navigate(['']);
+        this.formatInputData(this.userEditForm.value);
+    };
+    UserComponent.prototype.formatInputData = function (data) {
+        console.log(data);
+    };
     UserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-user',
             template: __webpack_require__(/*! ./user.component.html */ "./src/app/user/user.component.html"),
             styles: [__webpack_require__(/*! ./user.component.css */ "./src/app/user/user.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__["ApplicantService"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"]])
+        __metadata("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _service_applicant_service__WEBPACK_IMPORTED_MODULE_2__["ApplicantService"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"]])
     ], UserComponent);
     return UserComponent;
 }());

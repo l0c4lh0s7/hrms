@@ -65,6 +65,7 @@ public class UserController {
 	@RequestMapping( value = "/update",
 					 method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user) {
+		System.out.println(user.toString());
 		Credential cred = user.getCredential();
 		this.credentialService.update(cred);
 		this.userService.update(user);
