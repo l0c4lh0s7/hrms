@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row m-y-2" *ngIf="jobEditForm && job">
+        <!-- edit form column -->
+        <div class="col-lg-10 text-lg-center">
+            <h2>Job Details</h2>
+        </div>
+        <div class="col-lg-8" *ngIf="!job?.active">
+            <div class="alert alert-danger alert-dismissable"> <a class="panel-close close" data-dismiss="alert">×</a>
+                <strong>Important </strong>This job is not active ..
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <form role="form" [formGroup]="jobEditForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Position</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" [value]="job.position" formControlName="position" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Vacancies</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" [value]="job.vacancies" formControlName="vacancies" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Filled</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" [value]="job.filled" formControlName="filled" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Description</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="10" cols="30" formControlName="description">{{ job.description }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">CTC(Cost To Company)</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" [value]="job.ctc" formControlName="ctc" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Active</label>
+                    <div class="col-lg-9">
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio1">
+                                <input type="radio" class="form-check-input" id="radio1" name="isActive" value="true"
+                                    formControlName="isActive" [checked]="job.isActive">Yes
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio2">
+                                <input type="radio" class="form-check-input" id="radio2" name="isActive" value="false"
+                                    formControlName="isActive" [checked]="!job.isActive">No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Bond</label>
+                    <div class="col-lg-9">
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio1">
+                                <input type="radio" class="form-check-input" id="radio1" name="bond" value="true"
+                                    formControlName="bond" [checked]="job.bond">Yes
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio2">
+                                <input type="radio" class="form-check-input" id="radio2" name="bond" value="false"
+                                    formControlName="bond" [checked]="!job.bond">No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Bond Years</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="number" [value]="job.bond_years" formControlName="bond_years" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <Button type="reset" class="btn btn-secondary" (click)="cancel()" style="margin: 10px">Cancel</Button>
+                        <input type="submit" class="btn btn-primary" value="Save Changes" style="margin: 10px">
+                        <i class="fa fa-check" style="color: green" *ngIf="changesSaved">Values Updated</i>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr />

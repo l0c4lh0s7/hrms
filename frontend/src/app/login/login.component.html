@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="main-form">
+    <h3>Login Form</h3>
+    <form [formGroup]="form" id="Login" method="post">
+            <div class="form-group">
+                <input formControlName="email" type="email" class="form-control" id="inputEmail" placeholder="email">
+                <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+                  <div *ngIf="email.errors.required">email is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input formControlName="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
+                  <div *ngIf="password.errors.required">password is required</div>
+                </div>
+            </div>
+            <button class="btn btn-success" [disabled]="form.invalid" (click)="Onsubmit()">Login</button>
+    </form>
+    <div class="register">
+      <a  [routerLink]="['/register']">Register now </a>
+  </div>
+
+  </div>
+
+
+</div>

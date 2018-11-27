@@ -1,0 +1,113 @@
+<div class="container">
+  <h3> Registration Form </h3>
+  <div class="main-form">
+    <form [formGroup]="registrationForm"  (ngSubmit) = "onSubmit()" method="post">
+
+      <div class="form-group">
+      <label for="firstName">First Name: </label>
+      <input  type="text"
+              name="firstName"
+              id="firstName"
+              class="form-control"
+              formControlName="firstName"
+              placeholder="First name">
+      <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">
+        <div *ngIf="firstName.errors.required">firstName is a required Field</div>
+        <div *ngIf="firstName.errors.cannotContainSpace">firstName cannot contain space </div>
+      </div>
+      </div>
+
+
+      <div class="form-group">
+      <label for="lastName">last Name: </label>
+      <input  type="text"
+              name="lastName"
+              id="lastName"
+              class="form-control"
+              formControlName="lastName"
+              placeholder="last name">
+      <div class="alert alert-danger" *ngIf="lastName.touched && lastName.invalid">
+        <div *ngIf="lastName.errors.required">lastName is a required Field</div>
+        <div *ngIf="lastName.errors.cannotContainSpace">lastName cannot contain space </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+      <label for="qualification">Qualification: </label>
+      <input  type="text"
+              name="qualification"
+              id="qualification"
+              class="form-control"
+              formControlName="qualification"
+              placeholder="qualification">
+              <div class="alert alert-danger" *ngIf="qualification.touched && qualification.invalid">
+                <div *ngIf="qualification.errors.required">Qualification is a required Field</div>
+              </div>
+      </div>
+
+      <div class="form-group">
+      <label for="email">Email: </label>
+      <input  type="text"
+              name="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="Email">
+              <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+                <div *ngIf="email.errors.required">Email is a required Field</div>
+                <div *ngIf="email.errors.emailTaken">This email is already registered, try loggin in </div>
+              </div>
+      </div>
+
+      <div class="form-group" >
+      <label for="dob">Date of Birth: </label>
+      <input  type="date"
+              name="dob"
+              id="dob"
+              class="form-control"
+              formControlName="dob"
+              placeholder="Date of Birth">
+              <div class="alert alert-danger" *ngIf="dob.touched && dob.invalid">
+                <div *ngIf="dob.errors.required">Dob is a required Field</div>
+              </div>
+      </div>
+
+      <div class="form-group">
+      <label for="experience" min="0" >Experience: </label>
+      <input  type="number"
+              name="experience"
+              id="experience"
+              class="form-control"
+              formControlName="experience"
+              placeholder="experience (years)">
+              <div class="alert alert-danger" *ngIf="experience.touched && experience.invalid">
+                <div *ngIf="experience.errors.required">Experience is a required Field</div>
+                <div *ngIf="experience.errors.min">Must be a positive value</div>
+              </div>
+      </div>
+
+      <div class="form-group">
+      <label for="password" >Password: </label>
+      <input  type="password"
+              name="password"
+              id="password"
+              class="form-control"
+              minlength="8"
+              formControlName="password"
+              placeholder="Password">
+              <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
+                <div *ngIf="password.errors.required">Password is a required Field</div>
+                <div *ngIf="password.errors.cannotContainSpace">password cannot contain space </div>
+                <div *ngIf="password.errors.minlength">Must be atleast of 8 characters </div>
+                <div *ngIf="password.errors.pattern">Password contains only alphabets, numbers and _ @ ! only and no special characters </div>
+              </div>
+      </div>
+      <div class="center">
+        <button class="btn btn-primary " [disabled]="registrationForm.invalid" > submit </button>
+
+      </div>
+
+
+      </form>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row m-y-2">
+      <!-- edit form column -->
+      <div class="col-lg-10 text-lg-center">
+          <h2>Create New User</h2>
+      </div> 
+      <div class="col-lg-10">
+          <form role="form" [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                  <div class="col-lg-9">
+                      <input class="form-control" type="text" name="Name" formControlName="Name" />
+                      <div class="alert alert-danger" *ngIf="Name?.touched && Name?.invalid">
+                        <div *ngIf="Name?.errors.required">this is a required Field</div>
+                      </div> 
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                  <div class="col-lg-9">
+                      <input class="form-control" type="email" name="email" formControlName="email" />
+                      <div class="alert alert-danger" *ngIf="email?.touched && email?.invalid">
+                        <div *ngIf="email?.errors.required">this is a required Field</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">DOB</label>
+                  <div class="col-lg-9">
+                      <input class="form-control" type="date" name="dob" formControlName="dob" />
+                      <div class="alert alert-danger" *ngIf="dob?.touched && dob?.invalid">
+                        <div *ngIf="dob?.errors.required">this is a required Field</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Experience</label>
+                  <div class="col-lg-9">
+                      <input class="form-control" type="number" name="experience" formControlName="experience" />
+                      <div class="alert alert-danger" *ngIf="experience?.touched && experience?.invalid">
+                        <div *ngIf="experience?.errors.required">this is a required Field</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Admin</label>
+                  <div class="col-lg-9">
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input" id="radio1" name="isAdmin" value="true"
+                                  formControlName="isAdmin">Yes
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" id="radio2" name="isAdmin" value="false"
+                                  formControlName="isAdmin" checked>No
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                <div class="col-lg-9">
+                    <input class="form-control" type="password" name="newpassword" formControlName="newPassword" />
+                    <div class="alert alert-danger" *ngIf="newPassword?.touched && newPassword?.invalid">
+                        <div *ngIf="newPassword?.errors.required">this is a required Field</div>
+                      </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label form-control-label">Confirm Password</label>
+                <div class="col-lg-9">
+                    <input class="form-control" type="password" name="confirmPassword" formControlName="confirmPassword" />
+                    <div class="alert alert-danger" *ngIf="confirmPassword?.touched && confirmPassword?.invalid">
+                        <div *ngIf="confirmPassword?.errors.required">this is a required Field</div>
+                        <!-- <div *ngIf="confirmPassword?.errors.passwordShouldMatch">Passwords did not match</div> -->
+                      </div>
+                      <div *ngIf="confirmPassword?.valid && createUserForm?.invalid && createUserForm?.errors?.passwordShouldMatch" class="alert alert-danger">
+                        Password did not match
+                      </div>
+                </div>
+            </div>
+              <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label"></label>
+                  <div class="col-lg-9">
+                      <Button type="reset" class="btn btn-secondary" (click)="reset()" style="margin: 10px">Reset</Button>
+                      <input type="submit" class="btn btn-primary" value="Create user" style="margin: 10px">
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<hr />

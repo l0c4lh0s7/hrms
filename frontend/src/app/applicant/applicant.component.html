@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Users</h2>
+  <div class="container card">
+    <div class="row card" *ngFor="let applicant of applicants">
+      <div class="col-md-6 img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png" class="img-rounded">
+      </div>
+      <div class="col-md-6 details">
+        <blockquote>
+          <h5>{{ applicant.name }}</h5>
+          <small><cite title="Source Title">{{ applicant.qualification }}  <i class="icon-map-marker"></i></cite></small>
+        </blockquote>
+        <p>
+          {{ applicant.dob }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>

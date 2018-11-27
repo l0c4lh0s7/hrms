@@ -1,0 +1,25 @@
+<nav class="navbar navbar-light bg-light mb-5">
+  <a class="navbar-brand" routerLink="home">HRMS</a>
+  <div class="navbar-expand mr-auto">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="" routerLinkActive="active">Home</a>
+      <a class="nav-item nav-link" routerLink="applicant" routerLinkActive="active">Applicant</a>
+      <a class="nav-item nav-link" routerLink="jobs" routerLinkActive="active">Jobs</a>
+    </div>
+  </div>
+  <div class="navbar-expand ml-auto navbar-nav">
+    <div class="navbar-nav">
+      <button class="btn btn-success" routerLink="login" *ngIf="!loggedIn" >Login</button>
+      <button class="btn btn-danger" routerLink="login" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
+      <a class="nav-item nav-link" href="https://github.com/l0c4lh0s7/hrms" target="_blank">
+        <i class="fa fa-github"></i>
+      </a>
+      <a class="nav-item nav-link" href="#" target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a> 
+      <a class="nav-item nav-link" href="#" target="_blank">
+        <i class="fa fa-medium"></i>
+      </a>
+    </div>
+  </div>
+</nav>
